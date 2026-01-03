@@ -1,0 +1,35 @@
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 6px;
+    color: var(--text-on-primary-button);
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    min-width: 250px;
+}
+
+.success {
+    background-color: #28a745;
+    /* Verde Sucesso */
+}
+
+.error {
+    background-color: #dc3545;
+    /* Vermelho Erro */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

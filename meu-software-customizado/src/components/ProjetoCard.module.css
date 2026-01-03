@@ -1,0 +1,65 @@
+.card {
+    border: 1px solid var(--border-primary);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: var(--bg-primary);
+    transition: box-shadow 0.2s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.title {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.deliveryDate {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.tags {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.priority {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.actions button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 12px;
+}

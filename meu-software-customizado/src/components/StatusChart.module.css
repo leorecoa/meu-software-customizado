@@ -1,0 +1,54 @@
+.container {
+    background: var(--bg-primary);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-primary);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.chartRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.label {
+    width: 140px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.barContainer {
+    flex: 1;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    height: 24px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease-out;
+}
+
+.pendente {
+    background-color: orange;
+}
+
+.em_andamento {
+    background-color: #007bff;
+}
+
+.concluido {
+    background-color: #28a745;
+}

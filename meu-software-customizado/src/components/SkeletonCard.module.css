@@ -1,0 +1,54 @@
+.card {
+    border: 1px solid var(--border-primary);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: var(--bg-primary);
+}
+
+.skeleton {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.title {
+    height: 24px;
+    width: 50%;
+    margin-bottom: 12px;
+}
+
+.text {
+    height: 16px;
+    width: 80%;
+    margin-bottom: 24px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.badge {
+    height: 20px;
+    width: 60px;
+}
+
+.actions {
+    height: 20px;
+    width: 100px;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}

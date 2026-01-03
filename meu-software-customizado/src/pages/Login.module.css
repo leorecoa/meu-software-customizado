@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--bg-secondary);
+}
+
+.form {
+    padding: 30px;
+    border-radius: 8px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 400px;
+}
+
+.title {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+}

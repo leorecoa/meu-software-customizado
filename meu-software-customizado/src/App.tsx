@@ -39,7 +39,10 @@ const App = () => {
     return saved ? JSON.parse(saved) : [];
   });
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<Projeto['status'] | 'todos'>('todos');
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
     localStorage.setItem('projetos', JSON.stringify(projetos));
@@ -79,9 +82,17 @@ const App = () => {
     }
   };
 
-  const filteredProjects = projetos.filter(p =>
-    p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.descricao.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProjects = projetos.filter(p => {
+    const matchesSearch = p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.descricao.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'todos' || p.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+  const currentProjects = filteredProjects.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   );
 
   return (
@@ -100,61 +111,109 @@ const App = () => {
                   + Novo Projeto
                 </Link>
               </div>
-              <input
-                type="text"
-                placeholder="🔍 Buscar por nome ou descrição..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '0.8rem',
-                  borderRadius: '6px',
-                  border: '1px solid var(--border-primary, #ccc)',
-                  fontSize: '1rem',
-                  backgroundColor: 'var(--bg-card, #fff)',
-                  color: 'var(--text-primary, inherit)',
-                  boxSizing: 'border-box'
-                }}
-              />
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <input
+                  type="text"
+                  placeholder="🔍 Buscar por nome ou descrição..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '0.8rem',
+                    borderRadius: '6px',
+                    border: '1px solid var(--border-primary, #ccc)',
+                    fontSize: '1rem',
+                    backgroundColor: 'var(--bg-card, #fff)',
+                    color: 'var(--text-primary, inherit)',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => {
+                    setStatusFilter(e.target.value as Projeto['status'] | 'todos');
+                    setCurrentPage(1);
+                  }}
+                  style={{
+                    padding: '0.8rem',
+                    borderRadius: '6px',
+                    border: '1px solid var(--border-primary, #ccc)',
+                    fontSize: '1rem',
+                    backgroundColor: 'var(--bg-card, #fff)',
+                    color: 'var(--text-primary, inherit)',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <option value="todos">Todos</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="em_andamento">Em Andamento</option>
+                  <option value="concluido">Concluído</option>
+                </select>
+              </div>
             </div>
 
             {filteredProjects.length === 0 ? (
               <div style={{ textAlign: 'center', color: '#888', marginTop: '50px', padding: '2rem', border: '2px dashed #ccc', borderRadius: '8px' }}>
-                <p>{searchTerm ? 'Nenhum projeto encontrado para a busca.' : 'Nenhum projeto cadastrado ainda.'}</p>
+                <p>{(searchTerm || statusFilter !== 'todos') ? 'Nenhum projeto encontrado para os filtros selecionados.' : 'Nenhum projeto cadastrado ainda.'}</p>
               </div>
             ) : (
-              <div style={{ display: 'grid', gap: '1rem' }}>
-                {filteredProjects.map(projeto => (
-                  <div key={projeto.id} style={{
-                    padding: '1.5rem', border: '1px solid var(--border-primary, #ddd)',
-                    borderRadius: '8px', backgroundColor: 'var(--bg-card, #fff)'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <h3 style={{ margin: '0 0 0.5rem 0' }}>{projeto.nome}</h3>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <Button
-                          label="Editar"
-                          variant="secondary"
-                          onClick={() => navigate(`/editar/${projeto.id}`)}
-                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                        />
-                        <Button
-                          label="Excluir"
-                          variant="danger"
-                          onClick={() => handleDelete(projeto.id)}
-                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                        />
+              <>
+                <div style={{ display: 'grid', gap: '1rem' }}>
+                  {currentProjects.map(projeto => (
+                    <div key={projeto.id} style={{
+                      padding: '1.5rem', border: '1px solid var(--border-primary, #ddd)',
+                      borderRadius: '8px', backgroundColor: 'var(--bg-card, #fff)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                        <h3 style={{ margin: '0 0 0.5rem 0' }}>{projeto.nome}</h3>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <Button
+                            label="Editar"
+                            variant="secondary"
+                            onClick={() => navigate(`/editar/${projeto.id}`)}
+                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                          />
+                          <Button
+                            label="Excluir"
+                            variant="danger"
+                            onClick={() => handleDelete(projeto.id)}
+                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                          />
+                        </div>
+                      </div>
+                      <p style={{ margin: '0 0 1rem 0', color: 'var(--text-primary)' }}>{projeto.descricao}</p>
+                      <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
+                        <span>📅 {new Date(projeto.dataEntrega).toLocaleDateString()}</span>
+                        <span style={{ textTransform: 'capitalize' }}>📌 {projeto.status.replace('_', ' ')}</span>
+                        <span style={{ textTransform: 'capitalize' }}>⚡ {projeto.prioridade}</span>
                       </div>
                     </div>
-                    <p style={{ margin: '0 0 1rem 0', color: 'var(--text-primary)' }}>{projeto.descricao}</p>
-                    <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
-                      <span>📅 {new Date(projeto.dataEntrega).toLocaleDateString()}</span>
-                      <span style={{ textTransform: 'capitalize' }}>📌 {projeto.status.replace('_', ' ')}</span>
-                      <span style={{ textTransform: 'capitalize' }}>⚡ {projeto.prioridade}</span>
-                    </div>
+                  ))}
+                </div>
+
+                {totalPages > 1 && (
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '2rem' }}>
+                    <Button
+                      label="Anterior"
+                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      variant="secondary"
+                    />
+                    <span>
+                      Página {currentPage} de {totalPages}
+                    </span>
+                    <Button
+                      label="Próxima"
+                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      variant="secondary"
+                    />
                   </div>
-                ))}
-              </div>
+                )}
+              </>
             )}
           </div>
         } />

@@ -39,8 +39,13 @@ const EditProjectWrapper = ({ projects, onUpdate }: { projects: Projeto[], onUpd
 const App = () => {
   const navigate = useNavigate();
   const [projetos, setProjetos] = useState<Projeto[]>(() => {
-    const saved = localStorage.getItem('projetos');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('projetos');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('Erro ao carregar projetos do localStorage:', error);
+      return [];
+    }
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<Projeto['status'] | 'todos'>('todos');

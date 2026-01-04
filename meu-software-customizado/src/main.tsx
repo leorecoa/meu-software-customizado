@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import { ToastContainer } from 'react-toastify';
+
+import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
+
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import './dark-mode.css';
-import 'react-toastify/dist/ReactToastify.css';
 
 const rootElement = document.getElementById('root');
 

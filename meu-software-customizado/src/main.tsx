@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
 import './index.css';
+import './dark-mode.css';
 
 const rootElement = document.getElementById('root');
 

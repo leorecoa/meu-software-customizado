@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { Projeto } from '../types/Projeto';
 import styles from './ProjetoForm.module.css';
 import { Button } from './Button';
@@ -15,11 +15,21 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
     const [status, setStatus] = useState<Projeto['status']>('pendente');
     const [prioridade, setPrioridade] = useState<Projeto['prioridade']>('media');
     const [dataEntrega, setDataEntrega] = useState('');
+    const [dataVisual, setDataVisual] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isDateInvalid, setIsDateInvalid] = useState(false);
+    const hiddenDateRef = useRef<HTMLInputElement>(null);
 
     // Obtém a data de hoje no formato YYYY-MM-DD para validação
     const hoje = new Date();
     const dataMinima = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
+
+    // Helper para formatar YYYY-MM-DD para DD/MM/YYYY
+    const formatarParaBR = (isoDate: string) => {
+        if (!isoDate) return '';
+        const [ano, mes, dia] = isoDate.split('-');
+        return `${dia}/${mes}/${ano}`;
+    };
 
     // Efeito para preencher o formulário quando entrarmos em modo de edição
     useEffect(() => {
@@ -29,6 +39,7 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
             setStatus(initialData.status);
             setPrioridade(initialData.prioridade);
             setDataEntrega(initialData.dataEntrega);
+            setDataVisual(formatarParaBR(initialData.dataEntrega));
         } else {
             // Limpa o formulário se sairmos do modo de edição
             setNome('');
@@ -36,8 +47,55 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
             setStatus('pendente');
             setPrioridade('media');
             setDataEntrega('');
+            setDataVisual('');
         }
     }, [initialData]);
+
+    const handleDataVisualChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Remove tudo que não é dígito
+        let v = e.target.value.replaceAll(/\D/g, '');
+        if (v.length > 8) v = v.slice(0, 8);
+
+        // Aplica a máscara DD/MM/AAAA
+        let formatted = v;
+        if (v.length > 4) {
+            formatted = `${v.slice(0, 2)}/${v.slice(2, 4)}/${v.slice(4)}`;
+        } else if (v.length > 2) {
+            formatted = `${v.slice(0, 2)}/${v.slice(2)}`;
+        }
+
+        setDataVisual(formatted);
+
+        // Se a data estiver completa (8 dígitos), tenta converter para ISO e validar
+        if (v.length === 8) {
+            const dia = v.slice(0, 2);
+            const mes = v.slice(2, 4);
+            const ano = v.slice(4);
+            const isoDate = `${ano}-${mes}-${dia}`;
+
+            const dateObj = new Date(isoDate);
+            // Verifica se é uma data válida (ex: não aceita 32/01)
+            if (!Number.isNaN(dateObj.getTime()) && dateObj.toISOString().slice(0, 10) === isoDate) {
+                setDataEntrega(isoDate);
+                setIsDateInvalid(false);
+            } else {
+                setDataEntrega(''); // Data inválida
+                setIsDateInvalid(true);
+            }
+        } else {
+            setDataEntrega(''); // Data incompleta
+            setIsDateInvalid(false);
+        }
+    };
+
+    const handleCalendarSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isoDate = e.target.value;
+        if (isoDate) {
+            setDataEntrega(isoDate);
+            setDataVisual(formatarParaBR(isoDate));
+            setIsDateInvalid(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -66,6 +124,7 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
             setStatus('pendente');
             setPrioridade('media');
             setDataEntrega('');
+            setDataVisual('');
         } catch (error) {
             console.error(error);
             alert('Erro ao salvar o projeto.');
@@ -113,7 +172,37 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
 
                 <div className={styles.col}>
                     <label htmlFor="dataEntrega" className={styles.label}>Data de Entrega:</label>
-                    <input id="dataEntrega" type="date" min={dataMinima} value={dataEntrega} onChange={e => setDataEntrega(e.target.value)} required className={styles.input} />
+                    <div className={styles.dateWrapper}>
+                        <input
+                            id="dataEntrega"
+                            type="text"
+                            placeholder="dd/mm/aaaa"
+                            value={dataVisual}
+                            onChange={handleDataVisualChange}
+                            required
+                            className={`${styles.input} ${styles.inputDate} ${isDateInvalid ? styles.inputError : ''}`}
+                            maxLength={10}
+                        />
+                        <button
+                            type="button"
+                            className={styles.calendarIcon}
+                            onClick={() => hiddenDateRef.current?.showPicker()}
+                            tabIndex={-1}
+                            title="Selecionar data"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </button>
+                        {/* Input oculto para manter a funcionalidade do calendário nativo */}
+                        <input
+                            type="date"
+                            ref={hiddenDateRef}
+                            onChange={handleCalendarSelect}
+                            min={dataMinima}
+                            style={{ opacity: 0, position: 'absolute', pointerEvents: 'none', width: 0, height: 0 }}
+                            tabIndex={-1}
+                        />
+                    </div>
+                    {isDateInvalid && <span className={styles.errorMessage}>Data inválida.</span>}
                 </div>
             </div>
 

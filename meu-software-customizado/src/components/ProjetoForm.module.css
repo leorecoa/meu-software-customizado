@@ -1,56 +1,108 @@
-.container {
-    margin-bottom: 30px;
-    padding: 20px;
-    border: 1px solid var(--border-primary);
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background-color: var(--bg-card, #fff);
+    padding: 1.5rem;
     border-radius: 8px;
-    background-color: var(--bg-primary);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.title {
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: var(--text-primary);
-    font-size: 1.25rem;
+/* Suporte ao modo escuro se as variáveis não estiverem definidas */
+:global(body.dark) .form {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
 }
 
-.field {
-    margin-bottom: 15px;
-}
-
-.label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.input {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-secondary);
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    /* Garante que o padding não estoure a largura */
-    transition: border-color 0.2s;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-}
-
-.input:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px var(--border-focus-glow, rgba(0, 123, 255, 0.2));
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .row {
     display: flex;
-    gap: 20px;
+    gap: 1rem;
 }
 
-.col {
+.row>div {
     flex: 1;
+}
+
+label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary, inherit);
+}
+
+input,
+select,
+textarea {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.inputError {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+.inputError:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25) !important;
+}
+
+.errorMessage {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .row {
+        flex-direction: column;
+    }
+}
+
+/* Estilos para o campo de data com ícone */
+.dateWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputDate {
+    padding-right: 2.5rem; /* Espaço para o ícone não ficar em cima do texto */
+}
+
+/* Oculta o ícone nativo do navegador (Webkit/Blink) para usarmos o nosso */
+.inputDate::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.calendarIcon {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary, #555);
+}
+
+:global(body.dark) .calendarIcon {
+    color: #fff;
 }

@@ -1,27 +1,161 @@
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { ProjetoForm } from './components/ProjetoForm';
+import { Button } from './components/Button';
+import { ConfirmationModal } from './components/ConfirmationModal';
 import type { Projeto } from './types/Projeto';
+
+// Componente auxiliar para a rota de Edição
+const EditProjectWrapper = ({ projects, onUpdate }: { projects: Projeto[], onUpdate: (id: string, data: Omit<Projeto, 'id'>) => Promise<void> }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const project = projects.find(p => p.id === id);
+
+  if (!project) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <h2>Projeto não encontrado</h2>
+        <Link to="/" style={{ color: '#007bff' }}>Voltar para o início</Link>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <ProjetoForm
+        initialData={project}
+        onSave={async (data) => await onUpdate(project.id, data)}
+        onCancel={() => navigate('/')}
+      />
+    </div>
+  );
+};
 
 const App = () => {
   const navigate = useNavigate();
-  // Mock para a função de salvar (simulação)
-  const handleSave = async (projeto: Omit<Projeto, 'id'>) => {
-    console.log('Projeto salvo:', projeto);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    alert('Projeto salvo com sucesso! (Verifique o console)');
+  const [projetos, setProjetos] = useState<Projeto[]>(() => {
+    const saved = localStorage.getItem('projetos');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem('projetos', JSON.stringify(projetos));
+  }, [projetos]);
+
+  const handleSave = async (dadosProjeto: Omit<Projeto, 'id'>) => {
+    // Simula um delay de API
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const novoProjeto: Projeto = {
+      ...dadosProjeto,
+      id: Date.now().toString() // Gera um ID simples baseado no tempo
+    };
+
+    setProjetos((prev) => [...prev, novoProjeto]);
+    toast.success('Projeto salvo com sucesso!');
+    navigate('/');
   };
+
+  const handleUpdate = async (id: string, dadosAtualizados: Omit<Projeto, 'id'>) => {
+    // Simula um delay de API
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setProjetos((prev) => prev.map(p => p.id === id ? { ...dadosAtualizados, id } : p));
+    toast.success('Projeto atualizado com sucesso!');
+    navigate('/');
+  };
+
+  const handleDelete = (id: string) => {
+    setProjectToDelete(id);
+  };
+
+  const confirmDelete = () => {
+    if (projectToDelete) {
+      setProjetos((prev) => prev.filter((p) => p.id !== projectToDelete));
+      toast.success('Projeto excluído com sucesso!');
+      setProjectToDelete(null);
+    }
+  };
+
+  const filteredProjects = projetos.filter(p =>
+    p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.descricao.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div style={{ minHeight: '100vh', padding: '20px', color: 'var(--text-primary, inherit)' }}>
       <Routes>
         {/* Rota Inicial (Dashboard) */}
         <Route path="/" element={
-          <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Bem-vindo ao Sistema de Projetos</h1>
-            <p>Gerencie seus projetos de forma simples e eficiente.</p>
-            <Link to="/novo" style={{ color: '#007bff', textDecoration: 'underline', fontSize: '1.2rem' }}>
-              + Criar Novo Projeto
-            </Link>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h1>Meus Projetos</h1>
+                <Link to="/novo" style={{
+                  backgroundColor: '#0066cc', color: 'white', padding: '10px 20px',
+                  borderRadius: '6px', textDecoration: 'none', fontWeight: '500'
+                }}>
+                  + Novo Projeto
+                </Link>
+              </div>
+              <input
+                type="text"
+                placeholder="🔍 Buscar por nome ou descrição..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.8rem',
+                  borderRadius: '6px',
+                  border: '1px solid var(--border-primary, #ccc)',
+                  fontSize: '1rem',
+                  backgroundColor: 'var(--bg-card, #fff)',
+                  color: 'var(--text-primary, inherit)',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            {filteredProjects.length === 0 ? (
+              <div style={{ textAlign: 'center', color: '#888', marginTop: '50px', padding: '2rem', border: '2px dashed #ccc', borderRadius: '8px' }}>
+                <p>{searchTerm ? 'Nenhum projeto encontrado para a busca.' : 'Nenhum projeto cadastrado ainda.'}</p>
+              </div>
+            ) : (
+              <div style={{ display: 'grid', gap: '1rem' }}>
+                {filteredProjects.map(projeto => (
+                  <div key={projeto.id} style={{
+                    padding: '1.5rem', border: '1px solid var(--border-primary, #ddd)',
+                    borderRadius: '8px', backgroundColor: 'var(--bg-card, #fff)'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <h3 style={{ margin: '0 0 0.5rem 0' }}>{projeto.nome}</h3>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <Button
+                          label="Editar"
+                          variant="secondary"
+                          onClick={() => navigate(`/editar/${projeto.id}`)}
+                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                        />
+                        <Button
+                          label="Excluir"
+                          variant="danger"
+                          onClick={() => handleDelete(projeto.id)}
+                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                        />
+                      </div>
+                    </div>
+                    <p style={{ margin: '0 0 1rem 0', color: 'var(--text-primary)' }}>{projeto.descricao}</p>
+                    <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
+                      <span>📅 {new Date(projeto.dataEntrega).toLocaleDateString()}</span>
+                      <span style={{ textTransform: 'capitalize' }}>📌 {projeto.status.replace('_', ' ')}</span>
+                      <span style={{ textTransform: 'capitalize' }}>⚡ {projeto.prioridade}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         } />
 
@@ -35,6 +169,9 @@ const App = () => {
           </div>
         } />
 
+        {/* Rota de Edição */}
+        <Route path="/editar/:id" element={<EditProjectWrapper projects={projetos} onUpdate={handleUpdate} />} />
+
         {/* Rota de Fallback (404) */}
         <Route path="*" element={
           <div style={{ textAlign: 'center', marginTop: '50px', color: '#dc3545' }}>
@@ -44,6 +181,16 @@ const App = () => {
           </div>
         } />
       </Routes>
+
+      <ConfirmationModal
+        isOpen={!!projectToDelete}
+        onClose={() => setProjectToDelete(null)}
+        onConfirm={confirmDelete}
+        title="Excluir Projeto"
+        message="Tem certeza que deseja excluir este projeto? Esta ação não pode ser desfeita."
+        confirmLabel="Excluir"
+        variant="danger"
+      />
     </div>
   );
 };

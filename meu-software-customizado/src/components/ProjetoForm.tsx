@@ -17,6 +17,7 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
     const [prioridade, setPrioridade] = useState<Projeto['prioridade']>('media');
     const [dataEntrega, setDataEntrega] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     // Obtém a data de hoje no formato YYYY-MM-DD para validação
     const hoje = new Date();
@@ -40,11 +41,30 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
         }
     }, [initialData]);
 
+    const handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setDataEntrega(value);
+
+        // Validação visual conforme esperado pelos testes
+        if (value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) {
+                setErrors(prev => ({ ...prev, dataEntrega: 'Data inválida.' }));
+            } else {
+                setErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.dataEntrega;
+                    return newErrors;
+                });
+            }
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Validação básica
-        if (!nome || !descricao || !dataEntrega) return;
+        if (!nome || !descricao || !dataEntrega || Object.keys(errors).length > 0) return;
 
         if (dataEntrega < dataMinima) {
             toast.warn('A data de entrega não pode ser no passado.');
@@ -113,11 +133,20 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
 
                 <div className={styles.col}>
                     <label htmlFor="dataEntrega" className={styles.label}>Data de Entrega:</label>
-                    <input id="dataEntrega" type="date" min={dataMinima} value={dataEntrega} onChange={e => setDataEntrega(e.target.value)} required className={styles.input} />
+                    <input
+                        id="dataEntrega"
+                        type="date"
+                        min={dataMinima}
+                        value={dataEntrega}
+                        onChange={handleDataChange}
+                        required
+                        className={`${styles.input} ${errors.dataEntrega ? styles.inputError : ''}`}
+                    />
+                    {errors.dataEntrega && <span className={styles.errorMessage}>{errors.dataEntrega}</span>}
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div className={styles.actions}>
                 <Button
                     type="submit"
                     disabled={isSubmitting}

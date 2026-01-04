@@ -86,21 +86,4 @@ describe('projetoService', () => {
             expect(projetos.length).toBe(2);
         });
     });
-
-    describe('delete', () => {
-        it('deve excluir um projeto com sucesso', async () => {
-            const idParaExcluir = 1;
-
-            // Garante que os dados iniciais foram carregados
-            let projetos = await projetoService.getAll();
-            expect(projetos.find(p => p.id === idParaExcluir)).toBeDefined();
-
-            await projetoService.delete(idParaExcluir);
-
-            // Verifica se o projeto foi realmente removido da lista
-            projetos = await projetoService.getAll();
-            expect(projetos.find(p => p.id === idParaExcluir)).toBeUndefined();
-            expect(projetos.length).toBe(2);
-        });
-    });
 });

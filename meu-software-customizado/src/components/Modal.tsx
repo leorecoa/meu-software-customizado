@@ -48,11 +48,7 @@ export const Modal: React.FC<ModalProps> = ({
           <Button
             label={confirmLabel}
             onClick={onConfirm}
-            style={
-              variant === 'danger'
-                ? { backgroundColor: 'var(--button-danger-bg)' }
-                : undefined
-            }
+            variant={variant === 'danger' ? 'danger' : 'primary'}
           />
         </div>
       </div>

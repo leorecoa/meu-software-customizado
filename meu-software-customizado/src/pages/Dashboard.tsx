@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { projetoService } from '../services/projetoService';
 import { ProjetoCard } from '../components/ProjetoCard';
 import { ProjetoForm } from '../components/ProjetoForm';
-import { Toast } from '../components/Toast';
 import { Button } from '../components/Button';
 import { SkeletonCard } from '../components/SkeletonCard';
 import { Modal } from '../components/Modal';
@@ -12,11 +11,11 @@ import { useTheme } from '../contexts/ThemeContext';
 import type { Projeto } from '../types/Projeto';
 import { useProjetos } from '../hooks/useProjetos';
 import styles from './Dashboard.module.css';
+import { toast } from 'react-toastify';
 
 export const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [projetoEmEdicao, setProjetoEmEdicao] = useState<Projeto | null>(null);
     const [idParaExcluir, setIdParaExcluir] = useState<number | null>(null);
 
@@ -38,23 +37,27 @@ export const Dashboard: React.FC = () => {
         totalPaginas,
     } = useProjetos();
 
-    const showToast = (message: string, type: 'success' | 'error') => {
-        setToast({ message, type });
-    };
     const handleSaveProjeto = async (dadosProjeto: Omit<Projeto, 'id'>) => {
-        if (projetoEmEdicao) {
-            // MODO EDIÇÃO
-            const projetoAtualizado = { ...dadosProjeto, id: projetoEmEdicao.id };
-            await projetoService.update(projetoAtualizado);
+        try {
+            if (projetoEmEdicao) {
+                // MODO EDIÇÃO
+                const projetoAtualizado = { ...dadosProjeto, id: projetoEmEdicao.id };
+                await projetoService.update(projetoAtualizado);
 
-            setProjetos((lista: Projeto[]) => lista.map((p: Projeto) => p.id === projetoAtualizado.id ? projetoAtualizado : p));
-            showToast('Projeto atualizado com sucesso!', 'success');
-            setProjetoEmEdicao(null); // Sai do modo de edição
-        } else {
-            // MODO CRIAÇÃO
-            const projetoCriado = await projetoService.create(dadosProjeto);
-            setProjetos((lista: Projeto[]) => [...lista, projetoCriado]);
-            showToast('Projeto criado com sucesso!', 'success');
+                setProjetos((lista: Projeto[]) => lista.map((p: Projeto) => p.id === projetoAtualizado.id ? projetoAtualizado : p));
+                toast.success('Projeto atualizado com sucesso!');
+                setProjetoEmEdicao(null); // Sai do modo de edição
+            } else {
+                // MODO CRIAÇÃO
+                const projetoCriado = await projetoService.create(dadosProjeto);
+                setProjetos((lista: Projeto[]) => [...lista, projetoCriado]);
+                toast.success('Projeto criado com sucesso!');
+            }
+        } catch (error) {
+            console.error("Erro ao salvar projeto:", error);
+            toast.error('Falha ao salvar o projeto. Tente novamente.');
+            // Re-throw to allow the form to handle its submitting state
+            throw error;
         }
     };
 
@@ -72,11 +75,15 @@ export const Dashboard: React.FC = () => {
     // Executa a exclusão de fato
     const confirmarExclusao = async () => {
         if (idParaExcluir === null) return;
-
-        await projetoService.delete(idParaExcluir);
-        setProjetos((listaAtual: Projeto[]) => listaAtual.filter((projeto: Projeto) => projeto.id !== idParaExcluir));
-        showToast('Projeto excluído com sucesso!', 'success');
-        setIdParaExcluir(null); // Fecha o modal
+        try {
+            await projetoService.delete(idParaExcluir);
+            setProjetos((listaAtual: Projeto[]) => listaAtual.filter((projeto: Projeto) => projeto.id !== idParaExcluir));
+            toast.success('Projeto excluído com sucesso!');
+            setIdParaExcluir(null); // Fecha o modal
+        } catch (error) {
+            console.error("Erro ao excluir projeto:", error);
+            toast.error('Falha ao excluir o projeto.');
+        }
     };
 
     // Função para exportar a lista atual para CSV
@@ -117,14 +124,6 @@ export const Dashboard: React.FC = () => {
                     {theme === 'light' ? '🌙' : '☀️'}
                 </button>
             </div>
-
-            {toast && (
-                <Toast
-                    message={toast.message}
-                    type={toast.type}
-                    onClose={() => setToast(null)}
-                />
-            )}
 
             {/* Modal de Confirmação */}
             <Modal

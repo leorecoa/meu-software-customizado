@@ -1,34 +1,17 @@
-/* Correções e Melhorias Visuais para o Modo Escuro */
-
-/* Inputs, Selects e Textareas */
-body.dark input,
-body.dark select,
-body.dark textarea {
-    background-color: #2b2b2b;
-    color: #ffffff;
-    border: 1px solid #555;
-    transition: all 0.2s ease-in-out;
+/* Variáveis CSS para temas */
+body.light {
+    --bg-primary: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-primary: #212529;
+    --border-primary: #dee2e6;
 }
 
-/* Estado de Foco (quando clica no campo) */
-body.dark input:focus,
-body.dark select:focus,
-body.dark textarea:focus {
-    border-color: #007bff;
-    /* Azul destaque */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-    background-color: #333;
-}
+body.dark {
+    background-color: #121212;
+    color: #e0e0e0;
 
-/* Placeholder (texto de ajuda dentro do campo) */
-body.dark input::placeholder,
-body.dark textarea::placeholder {
-    color: #a0a0a0;
-}
-
-/* Garante que as opções do select também fiquem escuras */
-body.dark option {
-    background-color: #2b2b2b;
-    color: #ffffff;
+    --bg-primary: #121212;
+    --bg-card: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --border-primary: #444444;
 }

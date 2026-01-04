@@ -1,8 +1,9 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { ProjetoForm } from './components/ProjetoForm';
 import type { Projeto } from './types/Projeto';
 
 const App = () => {
+  const navigate = useNavigate();
   // Mock para a função de salvar (simulação)
   const handleSave = async (projeto: Omit<Projeto, 'id'>) => {
     console.log('Projeto salvo:', projeto);
@@ -29,7 +30,7 @@ const App = () => {
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <ProjetoForm
               onSave={handleSave}
-              onCancel={() => globalThis.location.href = '/'}
+              onCancel={() => navigate('/')}
             />
           </div>
         } />

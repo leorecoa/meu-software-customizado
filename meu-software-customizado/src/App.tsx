@@ -4,6 +4,10 @@ import { toast } from 'react-toastify';
 import { ProjetoForm } from './components/ProjetoForm';
 import { Button } from './components/Button';
 import { ConfirmationModal } from './components/ConfirmationModal';
+import { useSelection } from './hooks/useSelection';
+import { usePagination } from './hooks/usePagination';
+import { PaginationControls } from './components/PaginationControls';
+import { Toolbar } from './components/Toolbar';
 import type { Projeto } from './types/Projeto';
 
 // Componente auxiliar para a rota de Edição
@@ -41,12 +45,36 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<Projeto['status'] | 'todos'>('todos');
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [isBulkDelete, setIsBulkDelete] = useState(false);
   const ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
     localStorage.setItem('projetos', JSON.stringify(projetos));
   }, [projetos]);
+
+  const filteredProjects = projetos.filter(p => {
+    const matchesSearch = p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.descricao.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'todos' || p.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const {
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    currentItems: currentProjects,
+    nextPage,
+    prevPage
+  } = usePagination(filteredProjects, ITEMS_PER_PAGE);
+
+  const {
+    selectedIds: selectedProjects,
+    isAllSelected,
+    toggleSelection: toggleProjectSelection,
+    toggleSelectAll,
+    clearSelection
+  } = useSelection(filteredProjects, (p) => p.id);
 
   const handleSave = async (dadosProjeto: Omit<Projeto, 'id'>) => {
     // Simula um delay de API
@@ -75,25 +103,17 @@ const App = () => {
   };
 
   const confirmDelete = () => {
-    if (projectToDelete) {
+    if (isBulkDelete) {
+      setProjetos((prev) => prev.filter((p) => !selectedProjects.includes(p.id)));
+      toast.success(`${selectedProjects.length} projetos excluídos com sucesso!`);
+      clearSelection();
+      setIsBulkDelete(false);
+    } else if (projectToDelete) {
       setProjetos((prev) => prev.filter((p) => p.id !== projectToDelete));
       toast.success('Projeto excluído com sucesso!');
       setProjectToDelete(null);
     }
   };
-
-  const filteredProjects = projetos.filter(p => {
-    const matchesSearch = p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.descricao.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'todos' || p.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
-  const currentProjects = filteredProjects.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
 
   return (
     <div style={{ minHeight: '100vh', padding: '20px', color: 'var(--text-primary, inherit)' }}>
@@ -111,48 +131,16 @@ const App = () => {
                   + Novo Projeto
                 </Link>
               </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <input
-                  type="text"
-                  placeholder="🔍 Buscar por nome ou descrição..."
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                  style={{
-                    flex: 1,
-                    padding: '0.8rem',
-                    borderRadius: '6px',
-                    border: '1px solid var(--border-primary, #ccc)',
-                    fontSize: '1rem',
-                    backgroundColor: 'var(--bg-card, #fff)',
-                    color: 'var(--text-primary, inherit)',
-                    boxSizing: 'border-box'
-                  }}
-                />
-                <select
-                  value={statusFilter}
-                  onChange={(e) => {
-                    setStatusFilter(e.target.value as Projeto['status'] | 'todos');
-                    setCurrentPage(1);
-                  }}
-                  style={{
-                    padding: '0.8rem',
-                    borderRadius: '6px',
-                    border: '1px solid var(--border-primary, #ccc)',
-                    fontSize: '1rem',
-                    backgroundColor: 'var(--bg-card, #fff)',
-                    color: 'var(--text-primary, inherit)',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <option value="todos">Todos</option>
-                  <option value="pendente">Pendente</option>
-                  <option value="em_andamento">Em Andamento</option>
-                  <option value="concluido">Concluído</option>
-                </select>
-              </div>
+              <Toolbar
+                searchTerm={searchTerm}
+                onSearchChange={(term) => { setSearchTerm(term); setCurrentPage(1); }}
+                statusFilter={statusFilter}
+                onStatusFilterChange={(status) => { setStatusFilter(status); setCurrentPage(1); }}
+                isAllSelected={isAllSelected}
+                onToggleSelectAll={toggleSelectAll}
+                selectedCount={selectedProjects.length}
+                onBulkDelete={() => setIsBulkDelete(true)}
+              />
             </div>
 
             {filteredProjects.length === 0 ? (
@@ -168,7 +156,15 @@ const App = () => {
                       borderRadius: '8px', backgroundColor: 'var(--bg-card, #fff)'
                     }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                        <h3 style={{ margin: '0 0 0.5rem 0' }}>{projeto.nome}</h3>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                          <input
+                            type="checkbox"
+                            checked={selectedProjects.includes(projeto.id)}
+                            onChange={() => toggleProjectSelection(projeto.id)}
+                            style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                          />
+                          <h3 style={{ margin: '0' }}>{projeto.nome}</h3>
+                        </div>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
                           <Button
                             label="Editar"
@@ -194,25 +190,12 @@ const App = () => {
                   ))}
                 </div>
 
-                {totalPages > 1 && (
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '2rem' }}>
-                    <Button
-                      label="Anterior"
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      variant="secondary"
-                    />
-                    <span>
-                      Página {currentPage} de {totalPages}
-                    </span>
-                    <Button
-                      label="Próxima"
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      variant="secondary"
-                    />
-                  </div>
-                )}
+                <PaginationControls
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onNext={nextPage}
+                  onPrev={prevPage}
+                />
               </>
             )}
           </div>
@@ -242,11 +225,11 @@ const App = () => {
       </Routes>
 
       <ConfirmationModal
-        isOpen={!!projectToDelete}
-        onClose={() => setProjectToDelete(null)}
+        isOpen={!!projectToDelete || isBulkDelete}
+        onClose={() => { setProjectToDelete(null); setIsBulkDelete(false); }}
         onConfirm={confirmDelete}
-        title="Excluir Projeto"
-        message="Tem certeza que deseja excluir este projeto? Esta ação não pode ser desfeita."
+        title={isBulkDelete ? "Excluir Projetos" : "Excluir Projeto"}
+        message={isBulkDelete ? `Tem certeza que deseja excluir ${selectedProjects.length} projetos selecionados?` : "Tem certeza que deseja excluir este projeto? Esta ação não pode ser desfeita."}
         confirmLabel="Excluir"
         variant="danger"
       />

@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Toolbar Component > deve corresponder ao snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="margin-bottom: 1rem;"
+  >
+    <div
+      style="display: flex; gap: 1rem; margin-bottom: 1rem;"
+    >
+      <input
+        placeholder="🔍 Buscar por nome ou descrição..."
+        style="flex: 1 1 0%; padding: 0.8rem; border-radius: 6px; border: 1px solid var(--border-primary, #ccc); font-size: 1rem; background-color: var(--bg-card, #fff); color: var(--text-primary, inherit); box-sizing: border-box;"
+        type="text"
+        value=""
+      />
+      <select
+        style="padding: 0.8rem; border-radius: 6px; border: 1px solid var(--border-primary, #ccc); font-size: 1rem; background-color: var(--bg-card, #fff); color: var(--text-primary, inherit); cursor: pointer;"
+      >
+        <option
+          value="todos"
+        >
+          Todos
+        </option>
+        <option
+          value="pendente"
+        >
+          Pendente
+        </option>
+        <option
+          value="em_andamento"
+        >
+          Em Andamento
+        </option>
+        <option
+          value="concluido"
+        >
+          Concluído
+        </option>
+      </select>
+    </div>
+    <div
+      style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem; background-color: var(--bg-card, #fff); border-radius: 6px; border: 1px solid var(--border-primary, #ccc);"
+    >
+      <div
+        style="display: flex; align-items: center; gap: 0.5rem;"
+      >
+        <input
+          id="selectAll"
+          style="width: 18px; height: 18px; cursor: pointer;"
+          type="checkbox"
+        />
+        <label
+          for="selectAll"
+          style="cursor: pointer; user-select: none;"
+        >
+          Selecionar Todos
+        </label>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

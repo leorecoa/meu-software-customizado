@@ -14,6 +14,15 @@
     border: 1px solid #333;
 }
 
+.title {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary, #333);
+}
+
+:global(body.dark) .title {
+    color: #fff;
+}
+
 .fieldGroup {
     display: flex;
     flex-direction: column;
@@ -25,19 +34,21 @@
     gap: 1rem;
 }
 
-.row>div {
+.col {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-label {
+
+.label {
     font-weight: 500;
     font-size: 0.9rem;
     color: var(--text-primary, inherit);
 }
 
-input,
-select,
-textarea {
+.input {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -83,7 +94,8 @@ textarea {
 }
 
 .inputDate {
-    padding-right: 2.5rem; /* Espaço para o ícone não ficar em cima do texto */
+    padding-right: 2.5rem;
+    /* Espaço para o ícone não ficar em cima do texto */
 }
 
 /* Oculta o ícone nativo do navegador (Webkit/Blink) para usarmos o nosso */

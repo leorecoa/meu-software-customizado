@@ -1,9 +1,8 @@
-// Aqui definimos o contrato de dados
 export interface Projeto {
-  id: number;
+  id: string;
   nome: string;
   descricao: string;
-  status: 'em_andamento' | 'concluido' | 'pendente';
-  prioridade: 'alta' | 'media' | 'baixa';
+  status: 'pendente' | 'em_andamento' | 'concluido';
+  prioridade: 'baixa' | 'media' | 'alta';
   dataEntrega: string;
 }

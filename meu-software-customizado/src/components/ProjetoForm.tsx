@@ -79,20 +79,20 @@ export const ProjetoForm: React.FC<ProjetoFormProps> = ({ onSave, initialData, o
     const buttonLabel = isSubmitting ? submittingLabel : idleLabel;
 
     return (
-        <form onSubmit={handleSubmit} className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.form}>
             <h3 className={styles.title}>{initialData ? 'Editar Projeto' : 'Novo Projeto'}</h3>
 
-            <div className={styles.field}>
+            <div className={styles.fieldGroup}>
                 <label htmlFor="nome" className={styles.label}>Nome do Projeto:</label>
                 <input id="nome" type="text" value={nome} onChange={e => setNome(e.target.value)} required className={styles.input} />
             </div>
 
-            <div className={styles.field}>
+            <div className={styles.fieldGroup}>
                 <label htmlFor="descricao" className={styles.label}>Descrição:</label>
                 <textarea id="descricao" value={descricao} onChange={e => setDescricao(e.target.value)} required className={styles.input} rows={3} />
             </div>
 
-            <div className={`${styles.field} ${styles.row}`}>
+            <div className={`${styles.fieldGroup} ${styles.row}`}>
                 <div className={styles.col}>
                     <label htmlFor="status" className={styles.label}>Status:</label>
                     <select id="status" value={status} onChange={e => setStatus(e.target.value as Projeto['status'])} className={styles.input}>

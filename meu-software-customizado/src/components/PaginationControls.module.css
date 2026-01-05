@@ -1,0 +1,231 @@
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info {
+  width: 100%;
+  text-align: center;
+}
+
+.infoText {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.2));
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.navButton:hover:not(.disabled) {
+  background: #0066cc;
+  color: white;
+  border-color: #0066cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+.navButton:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.navButton.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+.icon {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.buttonText {
+  font-weight: 600;
+}
+
+.pageNumbers {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pageButton {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.2));
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageButton:hover:not(:disabled) {
+  background: rgba(0, 102, 204, 0.1);
+  border-color: #0066cc;
+  color: #0066cc;
+  transform: translateY(-2px);
+}
+
+.pageButton.active {
+  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+  color: white;
+  border-color: #0066cc;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.4);
+  font-weight: 700;
+}
+
+.pageButton.active:hover {
+  background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.5);
+}
+
+.pageButton:disabled {
+  cursor: default;
+}
+
+.ellipsis {
+  padding: 0 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  min-width: 40px;
+  justify-content: center;
+}
+
+.pageIndicator {
+  width: 100%;
+  text-align: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+}
+
+.pageText {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Dark mode */
+body.dark .pagination {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .navButton {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark .navButton:hover:not(.disabled) {
+  box-shadow: 0 4px 8px rgba(0, 102, 204, 0.5);
+}
+
+body.dark .pageButton {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark .pageButton:hover:not(:disabled) {
+  background: rgba(0, 102, 204, 0.2);
+}
+
+body.dark .pageIndicator {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pagination {
+    padding: 1rem;
+  }
+
+  .controls {
+    gap: 0.25rem;
+  }
+
+  .navButton {
+    min-width: 80px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .buttonText {
+    display: none;
+  }
+
+  .pageButton {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.5rem;
+    font-size: 0.8125rem;
+  }
+
+  .pageNumbers {
+    gap: 0.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageNumbers {
+    gap: 0;
+  }
+
+  .ellipsis {
+    padding: 0 0.25rem;
+    min-width: 32px;
+  }
+}
+

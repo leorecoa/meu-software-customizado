@@ -222,16 +222,9 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👨‍💻 Autor
 
-**Seu Nome**
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-- LinkedIn: [Seu Perfil](https://linkedin.com/in/seu-perfil)
+**Leandro Jessé**
+- GitHub: (https://github.com/leorecoa)
+- LinkedIn: (https://www.linkedin.com/in/leandro-jess%C3%A9-7b575539a/)
 
-## 🙏 Agradecimentos
-
-- React Team pela excelente biblioteca
-- Vite Team pela ferramenta incrível
-- Comunidade open source por todas as bibliotecas utilizadas
-
----
 
 ⭐ Se este projeto foi útil para você, considere dar uma estrela no repositório!

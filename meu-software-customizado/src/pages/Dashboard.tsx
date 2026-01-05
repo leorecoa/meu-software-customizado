@@ -71,7 +71,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     pendente: projetos.filter(p => p.status === 'pendente').length,
     emAndamento: projetos.filter(p => p.status === 'em_andamento').length,
     concluido: projetos.filter(p => p.status === 'concluido').length,
-    atrasado: projetos.filter(p => 
+    atrasado: projetos.filter(p =>
       new Date(p.dataEntrega) < new Date() && p.status !== 'concluido'
     ).length,
   };
@@ -238,8 +238,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 {searchTerm || statusFilter !== 'todos' ? '🔍' : '📁'}
               </div>
               <h2 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)' }}>
-                {searchTerm || statusFilter !== 'todos' 
-                  ? 'Nenhum projeto encontrado' 
+                {searchTerm || statusFilter !== 'todos'
+                  ? 'Nenhum projeto encontrado'
                   : 'Nenhum projeto cadastrado'}
               </h2>
               <p style={{ margin: '0 0 1.5rem 0', color: 'var(--text-secondary)' }}>
@@ -274,6 +274,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 totalPages={totalPages}
                 onNext={nextPage}
                 onPrev={prevPage}
+                onPageChange={(page) => setCurrentPage(page)}
+                totalItems={sortedItems.length}
+                itemsPerPage={ITEMS_PER_PAGE}
               />
             )}
           </>
@@ -285,7 +288,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         onClose={() => { setProjectToDelete(null); setIsBulkDelete(false); }}
         onConfirm={confirmDelete}
         title={isBulkDelete ? "Excluir Projetos" : "Excluir Projeto"}
-        message={isBulkDelete 
+        message={isBulkDelete
           ? `Tem certeza que deseja excluir ${selectedProjects.length} projeto(s) selecionado(s)? Esta ação não pode ser desfeita.`
           : "Tem certeza que deseja excluir este projeto? Esta ação não pode ser desfeita."}
         confirmLabel="Excluir"

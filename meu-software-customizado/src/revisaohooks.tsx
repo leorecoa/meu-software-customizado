@@ -1,4 +1,5 @@
 import { useState, useMemo, memo, useCallback, useRef, useReducer } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 // Componente Filho que só renderiza se as props mudarem
 const ComponenteFilho = memo(({ texto, onButtonClick }: { texto: string, onButtonClick: () => void }) => {
@@ -36,6 +37,11 @@ function contadorReducer(state: ContadorState, action: ContadorAction): Contador
 }
 
 export default function RevisaoHooks() {
+    // Lê o parâmetro 'id' da URL (ex: /hooks/1)
+    const { id } = useParams();
+    // 1. Pega a função de navegação do hook
+    const navigate = useNavigate();
+
     const [state, dispatch] = useReducer(contadorReducer, initialState);
     const [toggle, setToggle] = useState(false);
 
@@ -76,6 +82,12 @@ export default function RevisaoHooks() {
         // Note que o componente NÃO renderiza novamente ao clicar aqui.
     };
 
+    // 2. Cria uma função que usa o navigate
+    const handleNavigateHome = () => {
+        console.log("Navegando para a página inicial programaticamente...");
+        navigate('/'); // Navega para a rota raiz
+    };
+
     // 1. Cálculo pesado que depende do 'count'
     const resultadoCalculoPesado = useMemo(() => {
         console.log("EXECUTANDO CÁLCULO PESADO...");
@@ -89,6 +101,7 @@ export default function RevisaoHooks() {
 
     return (
         <div>
+            <h2>ID da URL: {id}</h2>
             <h1>Contador (useReducer): {state.count}</h1>
             <h2>Cálculo Pesado: {resultadoCalculoPesado}</h2>
             <h2>Toggle: {toggle ? "ON" : "OFF"}</h2>
@@ -105,6 +118,10 @@ export default function RevisaoHooks() {
             </button>
             <button onClick={() => dispatch({ type: 'reset' })} style={{ marginLeft: '10px' }}>
                 Resetar (useReducer)
+            </button>
+            {/* 3. Adiciona o botão que dispara a navegação */}
+            <button onClick={handleNavigateHome} style={{ marginLeft: '10px', backgroundColor: '#e0f7fa' }}>
+                Navegar para Home (useNavigate)
             </button>
 
             <div style={{ marginTop: '2rem', borderTop: '2px solid #ccc', paddingTop: '1rem' }}>
@@ -127,6 +144,10 @@ export default function RevisaoHooks() {
 
             {/* O componente filho não renderizará quando o 'toggle' mudar, pois suas props não mudaram */}
             <ComponenteFilho texto={`O contador é: ${state.count}`} onButtonClick={handleChildClick} />
+
+            <div style={{ marginTop: '30px', borderTop: '1px solid #eee', paddingTop: '10px' }}>
+                <Link to="/">← Voltar para a Home</Link>
+            </div>
         </div>
     );
 }

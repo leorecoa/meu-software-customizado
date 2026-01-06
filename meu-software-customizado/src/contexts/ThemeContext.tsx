@@ -1,54 +1,52 @@
-import { createContext, useContext, useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+// Define os tipos para o contexto do tema
 type Theme = 'light' | 'dark';
-
 interface ThemeContextType {
     theme: Theme;
     toggleTheme: () => void;
 }
 
+// Cria o contexto com um valor inicial undefined
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+// Cria o provedor do tema
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [theme, setTheme] = useState<Theme>(() => {
-        const savedTheme = localStorage.getItem('theme');
-        // Validação: Só aceita se for exatamente 'light' ou 'dark'
-        if (savedTheme === 'light' || savedTheme === 'dark') {
-            return savedTheme;
+        // Tenta obter o tema do localStorage
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+            return storedTheme;
         }
-        // Opcional: Detectar preferência do sistema se não houver salvo
-        if (globalThis.matchMedia?.('(prefers-color-scheme: dark)')?.matches) {
-            return 'dark';
-        }
-        return 'light';
+        // Se não houver, verifica a preferência do sistema
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     });
 
+    // Efeito para atualizar a classe no elemento <html> e o localStorage
     useEffect(() => {
-        const body = document.body;
-        // Remove classes antigas e adiciona a nova para ativar o CSS correspondente
-        body.classList.remove('light', 'dark');
-        body.classList.add(theme);
+        const root = window.document.documentElement;
+        root.classList.remove('light', 'dark');
+        root.classList.add(theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    const toggleTheme = useCallback(() => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    }, []);
-
-    const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
+    // Função para alternar o tema
+    const toggleTheme = () => {
+        setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
 
     return (
-        <ThemeContext.Provider value={value}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
+// Hook customizado para usar o contexto do tema
 export const useTheme = () => {
     const context = useContext(ThemeContext);
     if (context === undefined) {
-        throw new Error('useTheme must be used within a ThemeProvider');
+        throw new Error('useTheme deve ser usado dentro de um ThemeProvider');
     }
     return context;
 };

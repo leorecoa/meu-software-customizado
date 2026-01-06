@@ -1,58 +1,10 @@
-/* Variáveis CSS para temas */
-body.light {
-    --bg-primary: #f5f7fa;
-    --bg-secondary: #ffffff;
-    --bg-card: #ffffff;
-    --bg-hover: rgba(0, 0, 0, 0.05);
-    --text-primary: #212529;
-    --text-secondary: #6c757d;
-    --text-tertiary: #adb5bd;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --border-hover: rgba(0, 102, 204, 0.3);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
-    --primary-color: #0066cc;
-    --primary-hover: #0052a3;
-    --success-color: #28a745;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --info-color: #17a2b8;
-}
-
-body.dark {
-    background-color: #121212;
-    color: #e0e0e0;
-
+:root.dark {
     --bg-primary: #121212;
-    --bg-secondary: #1a1a1a;
-    --bg-card: #1e1e1e;
-    --bg-hover: rgba(255, 255, 255, 0.1);
+    --bg-secondary: #1e1e1e;
     --text-primary: #e0e0e0;
     --text-secondary: #a0a0a0;
-    --text-tertiary: #707070;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --border-hover: rgba(79, 195, 247, 0.4);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.7);
-    --primary-color: #4fc3f7;
-    --primary-hover: #29b6f6;
-    --success-color: #66bb6a;
-    --warning-color: #ffb74d;
-    --danger-color: #ef5350;
-    --info-color: #42a5f5;
-}
-
-/* Transições suaves para mudanças de tema */
-* {
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-/* Evitar transição em elementos que não devem ter */
-input,
-textarea,
-select,
-button {
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    --text-title: #ffffff;
+    --border-color: #3a3a3a;
+    --accent-color: #3b82f6;
+    --accent-color-light: #25396f;
 }

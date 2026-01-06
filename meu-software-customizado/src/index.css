@@ -1,5 +1,19 @@
-* {
+:root {
+  --bg-primary: #f5f7fa;
+  --bg-secondary: #ffffff;
+  --text-primary: #212529;
+  --text-secondary: #4b5563;
+  --text-title: #111827;
+  --border-color: #e5e7eb;
+  --accent-color: #2563eb;
+  --accent-color-light: #dbeafe;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 body {
@@ -9,26 +23,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--bg-primary);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-body.light {
-  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
-  background-attachment: fixed;
-  color: #212529;
-  min-height: 100vh;
-}
-
-body.dark {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  background-attachment: fixed;
-  color: #e0e0e0;
-  min-height: 100vh;
 }
 
 button {
@@ -57,18 +60,6 @@ button:disabled {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-body.dark ::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-body.dark ::-webkit-scrollbar-thumb {
-  background: #444;
-}
-
-body.dark ::-webkit-scrollbar-thumb:hover {
-  background: #666;
 }
 
 /* Animações globais */
@@ -112,10 +103,6 @@ body.dark ::-webkit-scrollbar-thumb:hover {
   color: inherit;
 }
 
-body.dark ::selection {
-  background: rgba(79, 195, 247, 0.3);
-}
-
 /* Focus visible para acessibilidade */
 *:focus-visible {
   outline: 2px solid #0066cc;
@@ -123,6 +110,11 @@ body.dark ::selection {
   border-radius: 4px;
 }
 
-body.dark *:focus-visible {
-  outline-color: #4fc3f7;
+/* Cores para o tema escuro */
+:root.dark ::selection {
+  background: rgba(79, 195, 247, 0.3);
+}
+
+:root.dark *:focus-visible {
+  outline-color: var(--accent-color);
 }

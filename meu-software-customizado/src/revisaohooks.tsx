@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 
 // Componente Filho que só renderiza se as props mudarem
 const ComponenteFilho = memo(({ texto, onButtonClick }: { texto: string, onButtonClick: () => void }) => {
-    console.log("ComponenteFilho renderizou! (Não deve aparecer ao alterar o Toggle)");
     return <div style={{ marginTop: '20px', padding: '15px', border: '1px solid #bfdbfe', backgroundColor: '#eff6ff', borderRadius: '8px' }}>
         <h3 style={{ margin: '0 0 10px 0', color: '#1e40af', fontSize: '1.1rem' }}>👶 Componente Filho (Memoized)</h3>
         <p style={{ margin: '0 0 15px 0', color: '#3b82f6' }}>{texto}</p>
@@ -104,7 +103,6 @@ export default function RevisaoHooks() {
     const contadorComRef = useRef(0);
 
     // Para analisar: este log aparecerá sempre que o componente renderizar
-    console.log("RevisaoHooks renderizou! Estado atual:", state.count);
 
     const handleIncrement = () => {
         dispatch({ type: 'incrementar' });
@@ -112,16 +110,12 @@ export default function RevisaoHooks() {
 
     // Para testar não renderização: atualizar para o mesmo valor causa um "Bailout"
     const handleSameState = () => {
-        console.log("Botão clicado! O estado não mudou, então o React não deve renderizar.");
         dispatch({ type: 'noop' });
     };
 
     // Função a ser passada para o filho.
     // Envolvida com useCallback para que sua referência não mude a cada renderização do pai.
-    const handleChildClick = useCallback(() => {
-        // Agora acessamos o valor de 'count' aqui dentro
-        console.log("Botão do filho foi clicado! O valor atual é:", state.count);
-    }, [state.count]); // Adicionamos 'state.count' nas dependências.
+    const handleChildClick = useCallback(() => { }, []);
 
     const handleFocarInput = () => {
         // Acessa o elemento DOM diretamente
@@ -130,19 +124,16 @@ export default function RevisaoHooks() {
 
     const handleIncrementarRef = () => {
         contadorComRef.current++;
-        console.log("Valor do contador com useRef:", contadorComRef.current);
         // Note que o componente NÃO renderiza novamente ao clicar aqui.
     };
 
     // 2. Cria uma função que usa o navigate
     const handleNavigateHome = () => {
-        console.log("Navegando para a página inicial programaticamente...");
         navigate('/'); // Navega para a rota raiz
     };
 
     // 1. Cálculo pesado que depende do 'count'
     const resultadoCalculoPesado = useMemo(() => {
-        console.log("EXECUTANDO CÁLCULO PESADO...");
         // Simula uma operação que consome muito processamento
         let resultado = 0;
         for (let i = 0; i < state.count * 100000000; i++) {

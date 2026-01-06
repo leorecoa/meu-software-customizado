@@ -7,12 +7,7 @@ function Home() {
       <h1>Página Inicial</h1>
       <p>Bem-vindo ao meu software customizado!</p>
       <nav>
-        <Link
-          to="/hooks/1"
-          style={{ color: "blue", textDecoration: "underline" }}
-        >
-          Ir para Revisão de Hooks (ID: 1)
-        </Link>
+        <Link to="/hooks/1" style={{ color: "blue", textDecoration: "underline" }}>Ir para Revisão de Hooks (ID: 1)</Link>
       </nav>
     </div>
   );

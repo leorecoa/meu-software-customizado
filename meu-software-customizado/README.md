@@ -1,230 +1,96 @@
-# 📊 Dashboard de Gerenciamento de Projetos
+# Laboratório de Hooks e Performance em React
 
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)
-![React](https://img.shields.io/badge/React-19.2-blue.svg)
-![Vite](https://img.shields.io/badge/Vite-7.3-646CFF.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+> Um dashboard interativo para explorar e dominar os principais Hooks do React, otimizações de performance e boas práticas de desenvolvimento com TypeScript e Vite.
 
-> Uma aplicação web moderna e completa para gerenciamento de projetos, desenvolvida com React, TypeScript e Vite. Interface intuitiva, recursos avançados e código de qualidade profissional.
+[**Clique aqui para ver a demonstração ao vivo**](https://meu-software-customizado.vercel.app/)
 
-## 🎯 Visão Geral
+<!-- Adicione aqui um screenshot ou GIF do seu app! -->
+<!-- ![Screenshot do App](URL_DA_IMAGEM_AQUI) -->
 
-Este projeto é um **Dashboard completo de Gerenciamento de Projetos** que demonstra boas práticas de desenvolvimento front-end moderno. A aplicação oferece uma experiência rica e profissional para criar, visualizar, editar e gerenciar projetos com múltiplos recursos avançados.
+---
 
-### ✨ Principais Funcionalidades
+## 🚀 Sobre o Projeto
 
-- 📋 **CRUD Completo**: Criar, ler, atualizar e excluir projetos
-- 🔍 **Busca Avançada**: Pesquisa em tempo real por nome ou descrição
-- 🎨 **Filtros Inteligentes**: Filtro por status (Pendente, Em Andamento, Concluído)
-- 📊 **Dashboard com Estatísticas**: Cards com métricas e gráficos visuais
-- 📈 **Gráficos de Status**: Visualização gráfica da distribuição de projetos
-- 🔄 **Ordenação**: Ordenar por nome, data, prioridade ou status
-- 📄 **Exportação de Dados**: Exportar para CSV ou JSON
-- ✅ **Seleção Múltipla**: Selecionar e excluir múltiplos projetos
-- 📱 **Responsivo**: Design adaptável para desktop, tablet e mobile
-- 🌙 **Dark Mode**: Suporte completo a tema claro e escuro
-- 📄 **Paginação**: Navegação eficiente entre páginas de resultados
-- ⚠️ **Error Boundary**: Tratamento robusto de erros
-- 💾 **Persistência Local**: Dados salvos no localStorage
+Este projeto foi criado como um "campo de treinamento" para aprofundar o conhecimento no ecossistema React moderno. Em vez de apenas construir uma UI, o foco foi entender **como e por que** as coisas funcionam, abordando desde o ciclo de vida e renderização de componentes até estratégias avançadas de gerenciamento de estado e estilização.
 
-## 🚀 Tecnologias Utilizadas
+A aplicação é um dashboard interativo onde cada "card" demonstra um conceito específico do React, permitindo visualizar na prática os efeitos de cada otimização.
 
-### Core
-- **React 19.2** - Biblioteca JavaScript para construção de interfaces
-- **TypeScript 5.9** - Superset do JavaScript com tipagem estática (strict mode)
-- **Vite 7.3** - Build tool moderna e extremamente rápida
+## 🛠️ Construído Com
 
-### Roteamento
-- **React Router DOM 7.1** - Roteamento para Single Page Applications
+*   **React 18:** Utilizando os hooks mais recentes e o modelo de renderização concorrente.
+*   **TypeScript:** Para um código mais seguro, legível e escalável.
+*   **Vite:** Para um ambiente de desenvolvimento e build extremamente rápido.
+*   **React Router DOM:** Para gerenciamento de rotas no lado do cliente (SPA) com layout persistente.
+*   **CSS Modules:** Para estilização escopada e organizada, evitando conflitos de classe.
+*   **Vercel:** Para deploy contínuo (CI/CD) e hosting.
 
-### UI/UX
-- **CSS Modules** - Estilos com escopo local
-- **CSS Variables** - Sistema de temas dinâmico
-- **React Toastify** - Notificações elegantes
+## ⚙️ Como Executar Localmente
 
-### Testes
-- **Vitest 4.0** - Framework de testes unitários
-- **Testing Library** - Utilitários para testes de componentes React
-- **jsdom** - Ambiente DOM para testes
+Para clonar e rodar esta aplicação, você precisará do [Git](https://git-scm.com) e [Node.js](https://nodejs.org/en/download/) (v20 ou superior) instalados no seu computador.
 
-### Qualidade de Código
-- **ESLint** - Linter para manter padrões de código
-- **Prettier** - Formatador de código
-
-## 📦 Instalação
-
-### Pré-requisitos
-- Node.js 18+ 
-- npm ou yarn
-
-### Passos
-
-1. **Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/dashboard-projetos.git
-cd dashboard-projetos
-```
+# 1. Clone o repositório
+git clone https://github.com/leorecoa/meu-software-customizado.git
 
-2. **Instale as dependências**
-```bash
+# 2. Navegue até a pasta do projeto
+cd meu-software-customizado
+
+# 3. Instale as dependências
 npm install
-```
 
-3. **Execute em modo desenvolvimento**
-```bash
+# 4. Rode o servidor de desenvolvimento
 npm run dev
 ```
 
-4. **Acesse no navegador**
-```
-http://localhost:5173
-```
+## ✨ Funcionalidades e Conceitos Aplicados
 
-## 🛠️ Scripts Disponíveis
+*   **Hooks Fundamentais:** Demonstrações práticas de `useState`, `useEffect` e `useRef`.
+*   **Gerenciamento de Estado Avançado:** Evolução de `useState` para `useReducer` para lógicas mais complexas e centralizadas.
+*   **Otimização de Performance:**
+    *   `React.memo` para evitar re-renderização de componentes filhos.
+    *   `useCallback` para memorizar funções e manter a estabilidade de referência para props.
+    *   `useMemo` para memorizar cálculos pesados e evitar sua re-execução a cada render.
+*   **Roteamento:**
+    *   Configuração de rotas com `react-router-dom`.
+    *   Layout persistente com `Outlet` e `Navbar`.
+    *   Leitura de parâmetros da URL com `useParams`.
+    *   Navegação programática com `useNavigate`.
+    *   Estilização de links ativos com `NavLink`.
+*   **Estilização e UI/UX:**
+    *   Implementação de Tema Escuro (Dark Mode) com Context API e Variáveis CSS.
+    *   Uso de CSS Modules para um CSS escopado e manutenível.
+    *   Design consistente com layout em cards e uma paleta de cores definida.
+*   **DevOps:**
+    *   Configuração de projeto com Vite e TypeScript.
+    *   Deploy contínuo (CI/CD) configurado no Vercel.
 
-```bash
-# Desenvolvimento
-npm run dev          # Inicia servidor de desenvolvimento
+## 🧠 Estudo de Caso: Desafios e Aprendizados
 
-# Build
-npm run build        # Gera build de produção
+Esta seção detalha as decisões técnicas e os aprendizados obtidos durante o desenvolvimento.
 
-# Testes
-npm test             # Executa testes unitários
-npm test:ui          # Executa testes com interface visual
+### 1. O Problema da Re-renderização Desnecessária
 
-# Qualidade
-npm run lint         # Verifica código com ESLint
-npm run format       # Formata código com Prettier
+Um dos maiores desafios em React é garantir que a aplicação permaneça performática à medida que cresce. Inicialmente, qualquer mudança de estado no componente principal (`RevisaoHooks`) causava a re-renderização de todos os seus filhos, incluindo a execução de cálculos pesados.
 
-# Preview
-npm run preview      # Preview do build de produção
-```
+*   **Solução:**
+    *   O **`useMemo`** foi aplicado ao `resultadoCalculoPesado`. Com isso, o cálculo só é refeito quando sua dependência (`count`) muda, e não quando outros estados (como o `toggle`) são alterados.
+    *   O **`ComponenteFilho`** foi envolvido em **`React.memo`**, que faz uma comparação superficial de suas props.
+    *   No entanto, apenas o `React.memo` não foi suficiente, pois a função `handleChildClick` era recriada a cada renderização do pai. A solução foi envolver `handleChildClick` com **`useCallback`**, garantindo que sua referência permanecesse estável.
 
-## 🏗️ Arquitetura
+### 2. Organização do Estado: `useState` vs. `useReducer`
 
-O projeto segue o princípio de **Separação de Responsabilidades (SoC)**, organizando o código em camadas bem definidas:
+O estado do contador, embora simples, foi migrado de `useState` para `useReducer` como um exercício prático.
 
-```
-src/
-├── components/      # Componentes de UI reutilizáveis
-│   ├── Button.tsx
-│   ├── ProjetoCard.tsx
-│   ├── StatsCard.tsx
-│   ├── StatusChart.tsx
-│   ├── ErrorBoundary.tsx
-│   └── ...
-├── contexts/        # Contextos React (ThemeContext)
-├── hooks/           # Custom Hooks
-│   ├── usePagination.ts
-│   ├── useSelection.ts
-│   └── useSort.ts
-├── pages/           # Páginas da aplicação
-│   └── Dashboard.tsx
-├── services/        # Camada de serviços (CRUD)
-│   └── projetoService.ts
-├── types/           # Definições TypeScript
-│   └── Projeto.ts
-└── utils/           # Funções utilitárias
-    └── exportUtils.ts
-```
+*   **Aprendizado:** `useReducer` centraliza toda a lógica de transição de estado em uma única função (o *reducer*). Isso torna o componente mais limpo (os handlers apenas despacham ações) e o estado mais previsível e fácil de testar, uma abordagem que escala muito melhor para estados mais complexos.
 
-## 🎨 Recursos Visuais
+### 3. Implementando um Tema Escuro Escalável
 
-### Dashboard
-- **Cards de Estatísticas**: Métricas visuais com ícones e cores
-- **Gráficos**: Visualização da distribuição de projetos por status
-- **Layout Responsivo**: Grid adaptável para diferentes tamanhos de tela
+A implementação do Dark Mode foi feita de forma a ser robusta e de fácil manutenção.
 
-### Cards de Projeto
-- **Design Moderno**: Interface limpa e profissional
-- **Badges de Status**: Indicadores visuais coloridos
-- **Badges de Prioridade**: Diferenciação clara de prioridades
-- **Indicador de Atraso**: Alerta visual para projetos atrasados
-- **Animações**: Transições suaves e feedback visual
+*   **Estratégia:**
+    1.  **Variáveis CSS:** Todas as cores do projeto foram definidas em variáveis no `:root` do `index.css`.
+    2.  **Sobrescrita com Classe:** Um arquivo `dark-mode.css` define os valores dessas mesmas variáveis quando o elemento `<html>` possui a classe `.dark`.
+    3.  **Context API:** O `ThemeContext` foi criado para gerenciar o estado atual do tema, persistir a escolha no `localStorage` e aplicar/remover a classe `.dark` do `<html>`.
+    4.  **Transições Suaves:** Uma transição CSS global foi adicionada para `background-color`, `color`, e `border-color`, garantindo que a troca de tema seja suave em toda a aplicação.
 
-### Tema Escuro/Claro
-- **Troca Instantânea**: Alternância suave entre temas
-- **Persistência**: Preferência salva no localStorage
-- **Detecção Automática**: Detecta preferência do sistema
-
-## 🧪 Testes
-
-O projeto possui cobertura de testes para:
-
-- ✅ **Services**: CRUD e persistência
-- ✅ **Hooks**: Lógica de negócio (paginação, seleção, ordenação)
-- ✅ **Componentes**: Renderização e interações
-
-```bash
-npm test
-```
-
-## 📊 Métricas e Estatísticas
-
-O dashboard exibe:
-
-- 📁 **Total de Projetos**
-- ⏳ **Projetos Pendentes**
-- 🚀 **Em Andamento**
-- ✅ **Concluídos**
-- ⚠️ **Atrasados**
-
-## 💡 Destaques Técnicos
-
-### TypeScript Strict Mode
-- Tipagem estrita habilitada
-- Tipos bem definidos em toda aplicação
-- IntelliSense completo no IDE
-
-### Custom Hooks
-- Lógica de negócio isolada e reutilizável
-- Fácil manutenção e testes
-- Composição eficiente
-
-### Service Pattern
-- Abstração da camada de dados
-- Fácil migração para API REST
-- Código desacoplado
-
-### Error Handling
-- Error Boundary para capturar erros React
-- Tratamento de erros no localStorage
-- Feedback visual para o usuário
-
-### Performance
-- Code splitting automático (Vite)
-- Lazy loading quando apropriado
-- Otimizações de re-renderização
-
-## 🎯 Casos de Uso
-
-Este projeto é ideal para:
-
-- 📚 **Portfólio**: Demonstração de habilidades técnicas
-- 🎓 **Aprendizado**: Referência de boas práticas React/TypeScript
-- 💼 **Case de Trabalho**: Exemplo de aplicação profissional
-- 🚀 **Base para Projetos**: Estrutura para expandir funcionalidades
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Sinta-se à vontade para:
-
-1. Fazer fork do projeto
-2. Criar uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abrir um Pull Request
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## 👨‍💻 Autor
-
-**Leandro Jessé**
-- GitHub: (https://github.com/leorecoa)
-- LinkedIn: (https://www.linkedin.com/in/leandro-jess%C3%A9-7b575539a/)
-
-
-⭐ Se este projeto foi útil para você, considere dar uma estrela no repositório!
+Essa abordagem desacopla a lógica do tema dos componentes, que apenas consomem as variáveis CSS sem precisar saber qual tema está ativo.

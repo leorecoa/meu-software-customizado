@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import RevisaoHooks from "./revisaohooks";
 
 function Home() {
@@ -7,7 +7,12 @@ function Home() {
       <h1>Página Inicial</h1>
       <p>Bem-vindo ao meu software customizado!</p>
       <nav>
-        <Link to="/hooks/1" style={{ color: "blue", textDecoration: "underline" }}>Ir para Revisão de Hooks (ID: 1)</Link>
+        <Link
+          to="/hooks/1"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          Ir para Revisão de Hooks (ID: 1)
+        </Link>
       </nav>
     </div>
   );
@@ -15,11 +20,9 @@ function Home() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/hooks/:id" element={<RevisaoHooks />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/hooks/:id" element={<RevisaoHooks />} />
+    </Routes>
   );
 }

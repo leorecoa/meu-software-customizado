@@ -12,13 +12,13 @@ export default function Dashboard() {
         </header>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
-          <div style={{ padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '8px', border: '1px solid #bae6fd' }}>
-            <h3 style={{ margin: 0, color: '#0284c7' }}>Projetos Ativos</h3>
-            <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>12</p>
+          <div className={styles.statCard}>
+            <h3 className={styles.statTitle} style={{ color: 'var(--primary)' }}>Projetos Ativos</h3>
+            <p className={styles.statValue}>12</p>
           </div>
-          <div style={{ padding: '20px', backgroundColor: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
-            <h3 style={{ margin: 0, color: '#16a34a' }}>Concluídos</h3>
-            <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>5</p>
+          <div className={styles.statCard}>
+            <h3 className={styles.statTitle} style={{ color: 'var(--success)' }}>Concluídos</h3>
+            <p className={styles.statValue}>5</p>
           </div>
         </div>
 

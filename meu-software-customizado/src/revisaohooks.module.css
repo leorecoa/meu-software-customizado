@@ -2,7 +2,7 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 0 20px 40px;
-    color: var(--text-primary);
+    color: var(--text-main);
 }
 
 .header {
@@ -13,26 +13,26 @@
 .header h1 {
     font-size: 2.5rem;
     margin: 0;
-    color: var(--text-title);
+    color: var(--text-main);
 }
 
 .header p {
-    color: var(--text-secondary);
+    color: var(--text-muted);
 }
 
 .header p span {
     font-weight: bold;
-    color: var(--accent-color);
+    color: var(--primary);
 }
 
 .card {
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
+    background-color: var(--bg-card);
+    border-radius: var(--radius);
     padding: 24px;
     margin-bottom: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .card:hover {
@@ -42,7 +42,7 @@
 
 .card h2 {
     margin-top: 0;
-    color: var(--text-title);
+    color: var(--text-main);
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -62,7 +62,7 @@
     border-radius: 8px;
     border: 1px solid transparent;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.95rem;
     transition: all 0.2s ease;
     display: inline-flex;
@@ -79,38 +79,38 @@
 }
 
 .primaryButton {
-    background-color: var(--accent-color);
+    background-color: var(--primary);
     color: var(--text-inverse);
 }
 
 .secondaryButton {
-    background-color: var(--bg-inverse);
+    background-color: var(--text-muted);
     color: var(--text-inverse);
 }
 
 .dangerButton {
-    background-color: #7f1d1d;
+    background-color: var(--danger);
     color: var(--text-inverse);
 }
 
 .warningButton {
-    background-color: #78350f;
+    background-color: #d97706;
     color: var(--text-inverse);
 }
 
 .incrementButton {
-    background-color: #047857;
+    background-color: var(--success);
     color: var(--text-inverse);
 }
 
 .outlineButton {
     background-color: transparent;
-    border-color: #6b7280;
-    color: #374151;
+    border-color: var(--border-color);
+    color: var(--text-muted);
 }
 
 .outlineButton:hover {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-hover);
 }
 
 /* Inputs */
@@ -169,7 +169,7 @@
 .monospace {
     font-size: 1.2rem;
     font-family: monospace;
-    color: var(--text-primary);
+    color: var(--text-main);
 }
 
 .toggleBadge {
@@ -180,21 +180,21 @@
 }
 
 .toggleOn {
-    background-color: #dcfce7;
-    color: #14532d;
+    background-color: var(--success-bg);
+    color: var(--success);
 }
 
 .toggleOff {
-    background-color: #fee2e2;
-    color: #7f1d1d;
+    background-color: var(--danger-bg);
+    color: var(--danger);
 }
 
 .infoText {
     margin-top: 1.5rem;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: 0.9rem;
     font-style: italic;
-    background-color: var(--bg-primary);
+    background-color: var(--bg-body);
     padding: 10px;
     border-radius: 6px;
 }
@@ -204,24 +204,24 @@
 .childComponent {
     margin-top: 20px;
     padding: 20px;
-    border: 1px solid var(--accent-color-light);
-    background-color: var(--accent-color-light);
+    border: 1px solid var(--primary-light);
+    background-color: var(--primary-light);
     border-radius: 8px;
 }
 
 .childTitle {
     margin: 0 0 10px 0;
-    color: var(--accent-color-dark);
+    color: var(--primary);
     font-size: 1.2rem;
 }
 
 .childText {
     margin: 0 0 15px 0;
-    color: var(--accent-color-dark);
+    color: var(--primary);
 }
 
 .childButton {
-    background-color: var(--accent-color);
+    background-color: var(--primary);
     color: var(--text-inverse);
 }
 
@@ -234,7 +234,7 @@
 
 .backButton {
     background-color: transparent;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     text-decoration: underline;
     border: none;
     padding: 10px;
@@ -243,10 +243,10 @@
 }
 
 .backButton:hover {
-    color: var(--accent-color);
+    color: var(--primary);
 }
 
 .footerText {
     margin-top: 10px;
-    color: var(--text-secondary);
+    color: var(--text-muted);
 }

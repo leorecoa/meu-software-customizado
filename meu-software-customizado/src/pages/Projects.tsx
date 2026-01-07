@@ -12,7 +12,7 @@ export default function Projects() {
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <header className={styles.cardHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <header className={styles.cardHeader}>
                     <div>
                         <h1 className={styles.cardTitle}>📁 Projetos</h1>
                         <p className={styles.cardSubtitle}>Gerencie suas demandas</p>
@@ -22,7 +22,7 @@ export default function Projects() {
 
                 <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
                     <thead>
-                        <tr style={{ textAlign: 'left', borderBottom: '2px solid #eee' }}>
+                        <tr style={{ textAlign: 'left', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>
                             <th style={{ padding: '10px' }}>Nome</th>
                             <th style={{ padding: '10px' }}>Cliente</th>
                             <th style={{ padding: '10px' }}>Status</th>
@@ -31,10 +31,10 @@ export default function Projects() {
                     </thead>
                     <tbody>
                         {projects.map((project) => (
-                            <tr key={project.id} style={{ borderBottom: '1px solid #f5f5f5' }}>
-                                <td style={{ padding: '15px 10px', fontWeight: 500 }}>{project.name}</td>
-                                <td style={{ padding: '15px 10px', color: '#666' }}>{project.client}</td>
-                                <td style={{ padding: '15px 10px' }}><span className={styles.badge}>{project.status}</span></td>
+                            <tr key={project.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                                <td style={{ padding: '16px 10px', fontWeight: 500, color: 'var(--text-main)' }}>{project.name}</td>
+                                <td style={{ padding: '16px 10px', color: 'var(--text-muted)' }}>{project.client}</td>
+                                <td style={{ padding: '16px 10px' }}><span className={`${styles.badge} ${styles.badgeSuccess}`}>{project.status}</span></td>
                                 <td style={{ padding: '15px 10px' }}><button className={styles.button}>Editar</button></td>
                             </tr>
                         ))}

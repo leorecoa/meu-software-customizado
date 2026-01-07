@@ -1,12 +1,54 @@
 :root {
-  --bg-primary: #f5f7fa;
-  --bg-secondary: #ffffff;
-  --text-primary: #212529;
-  --text-secondary: #4b5563;
-  --text-title: #111827;
-  --border-color: #e5e7eb;
-  --accent-color: #2563eb;
-  --accent-color-light: #dbeafe;
+  /* Light Theme (Padrão) */
+  --bg-body: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f5f9;
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  --border-color: #e2e8f0;
+  
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-light: #eff6ff;
+  
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --radius: 12px;
+}
+
+/* Dark Theme Override */
+:root.dark {
+  --bg-body: #0f172a;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  --border-color: #334155;
+  
+  --primary: #60a5fa;
+  --primary-hover: #3b82f6;
+  --primary-light: #1e3a8a; /* Azul escuro para fundo */
+  
+  --success: #34d399;
+  --success-bg: #064e3b;
+  
+  --danger: #f87171;
+  --danger-bg: #7f1d1d;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
 }
 
 *,
@@ -23,9 +65,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-primary);
+  background: var(--bg-body);
   background-attachment: fixed;
-  color: var(--text-primary);
+  color: var(--text-main);
   min-height: 100vh;
 }
 
@@ -50,16 +92,16 @@ button:disabled {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary, #f5f5f5);
+  background: var(--bg-body);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--border-color);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--text-muted);
 }
 
 /* Animações globais */
@@ -110,11 +152,10 @@ button:disabled {
   border-radius: 4px;
 }
 
-/* Cores para o tema escuro */
 :root.dark ::selection {
-  background: rgba(79, 195, 247, 0.3);
+  background: rgba(59, 130, 246, 0.3);
 }
 
 :root.dark *:focus-visible {
-  outline-color: var(--accent-color);
+  outline-color: var(--primary);
 }

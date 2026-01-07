@@ -1,0 +1,73 @@
+:root {
+    /* ========================
+     🎨 Colors
+  ======================== */
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-500: #2563eb;
+    --color-primary-700: #1d4ed8;
+
+    --color-success-500: #10b981;
+    --color-warning-500: #f59e0b;
+    --color-danger-500: #ef4444;
+
+    --color-neutral-0: #ffffff;
+    --color-neutral-50: #f9fafb;
+    --color-neutral-100: #f3f4f6;
+    --color-neutral-300: #d1d5db;
+    --color-neutral-600: #4b5563;
+    --color-neutral-900: #111827;
+
+    /* ========================
+     🧱 Surfaces
+  ======================== */
+    --surface-primary: var(--color-neutral-0);
+    --surface-secondary: var(--color-neutral-50);
+    --surface-border: var(--color-neutral-300);
+
+    /* ========================
+     ✍ Typography
+  ======================== */
+    --font-family-base: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.75rem;
+    --font-size-2xl: 2.25rem;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* ========================
+     📐 Spacing
+  ======================== */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* ========================
+     🌫 Shadows
+  ======================== */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+    /* ========================
+     🧭 Radius
+  ======================== */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    /* ========================
+     ⚡ Motion
+  ======================== */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.25s ease;
+}

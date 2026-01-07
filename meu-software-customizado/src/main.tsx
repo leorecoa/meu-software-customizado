@@ -10,6 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import './dark-mode.css';
 
+import "./styles/tokens.css";
+import "./styles/base.css";
+
+
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {

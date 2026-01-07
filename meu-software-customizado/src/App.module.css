@@ -1,89 +1,85 @@
-.pageContent {
-    animation: fadeIn 0.4s ease-out;
+.page {
+    animation: fadeIn 0.3s ease-out;
 }
 
-.homeContainer {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 40px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-
-    text-align: center;
-    background-color: var(--bg-secondary);
-    border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border-color);
+.container {
+    max-width: 920px;
+    margin: 40px auto;
+    padding: var(--space-lg);
 }
 
-.homeTitle {
-    font-size: 2.8rem;
-    color: var(--text-title);
-    margin-bottom: 16px;
-    margin-top: 0;
-    font-weight: 700;
+.card {
+    background-color: var(--surface-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg);
+    border: 1px solid var(--surface-border);
+    margin-bottom: var(--space-lg);
 }
 
-.homeText {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    margin-bottom: 32px;
-    line-height: 1.6;
+.cardHeader {
+    margin-bottom: var(--space-md);
 }
 
-.homeLink {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: var(--accent-color);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 10px -2px rgba(37, 99, 235, 0.3);
+.cardTitle {
+    font-size: var(--font-size-lg);
 }
 
-.homeLink:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 15px -3px rgba(37, 99, 235, 0.4);
+.cardSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
 }
 
-.navbar {
-    padding: 10px 30px;
-    background-color: var(--bg-secondary);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    display: flex;
-    justify-content: space-between;
+.button {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 40px;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    border: none;
+    transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
-.navLinks {
-    display: flex;
-    gap: 10px;
+.buttonPrimary {
+    background-color: var(--color-primary-500);
+    color: white;
 }
 
-.navLink {
-    text-decoration: none;
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: background-color 0.2s, color 0.2s;
+.buttonPrimary:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
-.navLink:hover {
-    background-color: var(--bg-primary);
-    color: var(--text-title);
+.buttonDanger {
+    background-color: var(--color-danger-500);
+    color: white;
 }
 
-.activeNavLink {
-    color: #172554;
-    background-color: #dbeafe;
+.badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.badgeSuccess {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

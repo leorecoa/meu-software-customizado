@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 
 // Define os tipos para o contexto do tema
 type Theme = 'light' | 'dark';
@@ -19,30 +19,33 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             return storedTheme;
         }
         // Se não houver, verifica a preferência do sistema
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     });
 
     // Efeito para atualizar a classe no elemento <html> e o localStorage
     useEffect(() => {
-        const root = window.document.documentElement;
+        const root = globalThis.document.documentElement;
         root.classList.remove('light', 'dark');
         root.classList.add(theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
 
     // Função para alternar o tema
-    const toggleTheme = () => {
+    const toggleTheme = useCallback(() => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
+    }, []);
+
+    const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={value}>
             {children}
         </ThemeContext.Provider>
     );
 };
 
 // Hook customizado para usar o contexto do tema
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
     const context = useContext(ThemeContext);
     if (context === undefined) {

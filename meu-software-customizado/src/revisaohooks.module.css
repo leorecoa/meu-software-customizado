@@ -32,12 +32,12 @@
     margin-bottom: 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border-color);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .card h2 {
@@ -47,6 +47,8 @@
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+
+/* Buttons */
 
 .buttonGroup {
     display: flex;
@@ -76,69 +78,48 @@
     transform: scale(0.97);
 }
 
-.incrementButton {
-    background-color: #10b981;
-    color: white;
+.primaryButton {
+    background-color: var(--accent-color);
+    color: var(--text-inverse);
 }
 
 .secondaryButton {
-    background-color: #1f2937;
-    /* Darkened for contrast */
-    color: white;
+    background-color: var(--bg-inverse);
+    color: var(--text-inverse);
 }
 
 .dangerButton {
-    background-color: #991b1b;
-    /* Darkened for contrast */
-    color: white;
-}
-
-.primaryButton {
-    background-color: #5b21b6;
-    /* Darkened for contrast */
-    color: white;
+    background-color: #7f1d1d;
+    color: var(--text-inverse);
 }
 
 .warningButton {
-    background-color: #92400e;
-    /* Darkened for contrast */
-    color: white;
+    background-color: #78350f;
+    color: var(--text-inverse);
+}
+
+.incrementButton {
+    background-color: #047857;
+    color: var(--text-inverse);
 }
 
 .outlineButton {
     background-color: transparent;
-    border-color: #4b5563;
-    /* Darkened for contrast */
+    border-color: #6b7280;
     color: #374151;
 }
 
 .outlineButton:hover {
     background-color: var(--bg-primary);
-    border-color: #6b7280;
 }
+
+/* Inputs */
 
 .inputGroup {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-}
-
-.input {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    flex-grow: 1;
-    min-width: 200px;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .label {
@@ -149,10 +130,29 @@
     font-size: 0.9rem;
 }
 
+.input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    flex-grow: 1;
+    min-width: 200px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+/* Info & states */
+
 .countDisplay {
     font-size: 3.5rem;
     font-weight: bold;
-    color: #10b981;
+    color: #047857;
     margin: 10px 0;
     text-align: center;
 }
@@ -181,12 +181,12 @@
 
 .toggleOn {
     background-color: #dcfce7;
-    color: #166534;
+    color: #14532d;
 }
 
 .toggleOff {
     background-color: #fee2e2;
-    color: #991b1b;
+    color: #7f1d1d;
 }
 
 .infoText {
@@ -199,6 +199,8 @@
     border-radius: 6px;
 }
 
+/* Child component */
+
 .childComponent {
     margin-top: 20px;
     padding: 20px;
@@ -209,19 +211,21 @@
 
 .childTitle {
     margin: 0 0 10px 0;
-    color: #1e40af;
+    color: var(--accent-color-dark);
     font-size: 1.2rem;
 }
 
 .childText {
     margin: 0 0 15px 0;
-    color: var(--accent-color);
+    color: var(--accent-color-dark);
 }
 
 .childButton {
     background-color: var(--accent-color);
-    color: white;
+    color: var(--text-inverse);
 }
+
+/* Footer */
 
 .footerNav {
     text-align: center;
@@ -235,4 +239,14 @@
     border: none;
     padding: 10px;
     font-size: 1rem;
+    cursor: pointer;
+}
+
+.backButton:hover {
+    color: var(--accent-color);
+}
+
+.footerText {
+    margin-top: 10px;
+    color: var(--text-secondary);
 }

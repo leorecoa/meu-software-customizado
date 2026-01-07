@@ -4,7 +4,8 @@ import {
     memo,
     useCallback,
     useRef,
-    useReducer
+    useReducer,
+    useEffect
 } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -73,6 +74,14 @@ function contadorReducer(
 }
 
 /* =========================================================
+   Inicialização do Estado (Persistência)
+========================================================= */
+const initContador = (initial: ContadorState): ContadorState => {
+    const saved = localStorage.getItem("contador-state");
+    return saved ? JSON.parse(saved) : initial;
+};
+
+/* =========================================================
    Estilos (TypeScript moderno com satisfies)
 ========================================================= */
 const styles = {
@@ -133,7 +142,14 @@ export default function RevisaoHooks() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [state, dispatch] = useReducer(contadorReducer, initialState);
+    // Inicializa o estado buscando do localStorage, se existir
+    const [state, dispatch] = useReducer(contadorReducer, initialState, initContador);
+
+    // Salva no localStorage sempre que o estado mudar
+    useEffect(() => {
+        localStorage.setItem("contador-state", JSON.stringify(state));
+    }, [state]);
+
     const [toggle, setToggle] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);

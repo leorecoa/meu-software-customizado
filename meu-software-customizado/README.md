@@ -9,6 +9,7 @@
 
 ---
 
+
 ## 🚀 Sobre o Projeto
 
 Este projeto foi criado como um "campo de treinamento" para aprofundar o conhecimento no ecossistema React moderno. Em vez de apenas construir uma UI, o foco foi entender **como e por que** as coisas funcionam, abordando desde o ciclo de vida e renderização de componentes até estratégias avançadas de gerenciamento de estado e estilização.
@@ -57,9 +58,26 @@ npm run dev
     *   Navegação programática com `useNavigate`.
     *   Estilização de links ativos com `NavLink`.
 *   **Estilização e UI/UX:**
-    *   Implementação de Tema Escuro (Dark Mode) com Context API e Variáveis CSS.
-    *   Uso de CSS Modules para um CSS escopado e manutenível.
-    *   Design consistente com layout em cards e uma paleta de cores definida.
+## 🎨 Design System
+
+### Tokens
+- Colors via CSS Variables
+- Tipografia escalável
+- Espaçamentos padronizados
+
+### Tema
+- Dark/Light com `data-theme`
+- Persistência no localStorage
+
+### Componentes
+- Button
+- Card
+- Layouts reutilizáveis
+
+### Padrões
+- CSS Modules
+- UI desacoplada de páginas
+
 *   **DevOps:**
     *   Configuração de projeto com Vite e TypeScript.
     *   Deploy contínuo (CI/CD) configurado no Vercel.

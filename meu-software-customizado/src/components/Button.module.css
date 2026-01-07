@@ -1,158 +1,26 @@
 .button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-family: inherit, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.5;
-  text-decoration: none;
-  white-space: nowrap;
-  user-select: none;
-  position: relative;
-  overflow: hidden;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  border: 1px solid var(--color-border);
 }
 
-.button:focus-visible {
-  outline: 2px solid #0056b3;
-  outline-offset: 2px;
-}
-
-.button:active {
-  transform: translateY(1px);
-}
-
-.button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* PRIMARY - Azul acessível (contraste 4.6:1+) */
 .primary {
-  background-color: #0066cc;
-  /* Mais escuro que #007bff */
-  color: #ffffff;
-  border: 1px solid #0052a3;
+  background: var(--color-accent);
+  color: white;
 }
 
-.primary:hover:not(:disabled) {
-  background-color: #0052a3;
-  border-color: #004080;
-}
-
-.primary:active:not(:disabled) {
-  background-color: #004080;
-}
-
-/* SECONDARY - Cinza acessível (corrigindo o erro da linha 27) */
 .secondary {
-  background-color: #5a6268;
-  /* Mais escuro que #6c757d */
-  color: #ffffff;
-  border: 1px solid #545b62;
+  background: transparent;
+  color: var(--color-text-primary);
 }
 
-.secondary:hover:not(:disabled) {
-  background-color: #545b62;
-  border-color: #4e555b;
+.primary:hover {
+  background: var(--color-accent);
+  opacity: 0.9;
 }
 
-.secondary:active:not(:disabled) {
-  background-color: #4e555b;
-}
-
-/* DANGER - Vermelho acessível */
-.danger {
-  background-color: #c82333;
-  /* Mais escuro que #dc3545 */
-  color: #ffffff;
-  border: 1px solid #b21f2d;
-}
-
-.danger:hover:not(:disabled) {
-  background-color: #b21f2d;
-  border-color: #9a1a26;
-}
-
-.danger:active:not(:disabled) {
-  background-color: #9a1a26;
-}
-
-/* Variações adicionais para melhor UX */
-
-/* Botão outline */
-.outline {
-  background-color: transparent;
-  border: 2px solid #0066cc;
-  color: #0066cc;
-}
-
-.outline:hover:not(:disabled) {
-  background-color: #0066cc;
-  color: #ffffff;
-}
-
-/* Botão ghost */
-.ghost {
-  background-color: transparent;
-  color: #2d3748;
-  border: 1px solid transparent;
-}
-
-.ghost:hover:not(:disabled) {
-  background-color: #f7fafc;
-  border-color: #e2e8f0;
-}
-
-/* Loading state */
-.button.loading {
-  cursor: wait;
-  opacity: 0.7;
-}
-
-/* Ripple effect (opcional) */
-.button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%);
-  transform-origin: 50% 50%;
-}
-
-.button:focus:not(:active)::after {
-  animation: ripple 1s ease-out;
-}
-
-@keyframes ripple {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: scale(40, 40);
-    opacity: 0;
-  }
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .button {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-  }
+.secondary:hover {
+  background: transparent;
+  opacity: 0.9;
 }

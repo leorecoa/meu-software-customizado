@@ -9,7 +9,7 @@ describe('ProjetoForm', () => {
 
         render(<ProjetoForm onSave={onSaveMock} onCancel={onCancelMock} />);
 
-        const submitButton = screen.getByText(/Adicionar Projeto/i);
+        const submitButton = screen.getByRole('button');
         fireEvent.click(submitButton);
 
         // A validação interna do componente (if !nome...) deve impedir a chamada.
@@ -40,7 +40,7 @@ describe('ProjetoForm', () => {
         fireEvent.change(dataInput, { target: { value: dataISO } });
 
         // Submete
-        const submitButton = screen.getByText(/Adicionar Projeto/i);
+        const submitButton = screen.getByRole('button');
         fireEvent.click(submitButton);
 
         // Verifica se onSave FOI chamado com os dados

@@ -1,0 +1,44 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/nginx/certs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    container_name: meu-software-frontend
+    labels:
+      autoheal: "true"
+
+  backend:
+    # Substitua pela imagem da sua API real
+    image: node:22-alpine
+    container_name: meu-backend
+    # Comando apenas para exemplo: cria um servidor HTTP simples na porta 3000
+    command: node -e "require('http').createServer((req, res) => res.end('Ola do Backend!')).listen(3000)"
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    labels:
+      autoheal: "true"
+
+  autoheal:
+    image: willfarrell/autoheal
+    container_name: autoheal
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

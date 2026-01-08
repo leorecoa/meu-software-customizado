@@ -1,0 +1,59 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  # 1. Job de Testes (Integração Contínua)
+  test:
+    name: Rodar Testes (Vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Instalar dependências
+        # Usa npm install para garantir compatibilidade.
+        # Se tiver package-lock.json commitado, 'npm ci' é mais rápido.
+        run: npm install
+
+      - name: Executar Testes
+        run: npm run test
+
+  # 2. Job de Build e Deploy (Entrega Contínua)
+  build-and-push:
+    name: Build Docker & Push to GHCR
+    needs: test # Só roda se os testes passarem
+    # Roda apenas na branch main (evita deploy de PRs não aprovados)
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Permissão necessária para subir no GHCR
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Login no GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build e Push da Imagem
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Gera a tag: ghcr.io/seu-usuario/seu-repo/frontend:latest
+          tags: ghcr.io/${{ github.repository }}/frontend:latest

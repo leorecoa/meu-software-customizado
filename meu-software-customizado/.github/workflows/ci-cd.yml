@@ -49,3 +49,48 @@ jobs:
               run: docker system prune -f
             - name: Confirm Cleanup
               run: docker images | grep ${env.IMAGE_NAME} || echo "Image successfully removed"
+
+    deploy:
+        needs: build-and-push
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Copy Compose File to VPS
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  source: "docker-compose.prod.yml"
+                  target: "~/app/"
+
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  script: |
+                      cd ~/app
+
+                      # Garante que a pasta de certificados existe (Gera se não existir)
+                      mkdir -p certs
+                      if [ ! -f certs/server.key ]; then
+                        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certs/server.key -out certs/server.crt -subj "/C=BR/ST=Estado/L=Cidade/O=Empresa/OU=TI/CN=localhost"
+                      fi
+
+                      # Login no GHCR para baixar a imagem privada
+                      echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+                      # Define a variável de ambiente com o nome da imagem completa
+                      export IMAGE_FULL_NAME=${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:latest
+
+                      # Pull da nova imagem e Restart dos containers
+                      docker-compose -f docker-compose.prod.yml pull
+                      docker-compose -f docker-compose.prod.yml up -d --remove-orphans
+
+                      # Limpeza de imagens antigas para economizar espaço
+                      docker image prune -f

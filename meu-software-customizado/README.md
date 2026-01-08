@@ -1,45 +1,47 @@
 # Laboratório de Hooks e Performance em React
 
-> Um dashboard interativo para explorar e dominar os principais Hooks do React, otimizações de performance e boas práticas de desenvolvimento com TypeScript e Vite.
+![CI/CD Pipeline](https://github.com/Leorecoa/meu-software-customizado/actions/workflows/ci-cd.yml/badge.svg)
+
+> Um dashboard interativo para explorar e dominar os principais Hooks do React, otimizações de performance e boas práticas de desenvolvimento com TypeScript e Vite. O projeto conta com uma infraestrutura robusta containerizada.
 
 [**Clique aqui para ver a demonstração ao vivo**](https://meu-software-customizado.vercel.app/)
 
-<!-- Adicione aqui um screenshot ou GIF do seu app! -->
-<!-- ![Screenshot do App](URL_DA_IMAGEM_AQUI) -->
-
 ---
-
 
 ## 🚀 Sobre o Projeto
 
-Este projeto foi criado como um "campo de treinamento" para aprofundar o conhecimento no ecossistema React moderno. Em vez de apenas construir uma UI, o foco foi entender **como e por que** as coisas funcionam, abordando desde o ciclo de vida e renderização de componentes até estratégias avançadas de gerenciamento de estado e estilização.
+Este projeto foi criado como um "campo de treinamento" para aprofundar o conhecimento no ecossistema React moderno e práticas de DevOps.
 
-A aplicação é um dashboard interativo onde cada "card" demonstra um conceito específico do React, permitindo visualizar na prática os efeitos de cada otimização.
+A aplicação é um dashboard interativo onde cada "card" demonstra um conceito específico do React. Além disso, o projeto implementa um ambiente de produção simulado com Docker, Nginx e CI/CD.
 
-## 🛠️ Construído Com
+## 🛠️ Tecnologias Utilizadas
 
-*   **React 18:** Utilizando os hooks mais recentes e o modelo de renderização concorrente.
-*   **TypeScript:** Para um código mais seguro, legível e escalável.
-*   **Vite:** Para um ambiente de desenvolvimento e build extremamente rápido.
-*   **React Router DOM:** Para gerenciamento de rotas no lado do cliente (SPA) com layout persistente.
-*   **CSS Modules:** Para estilização escopada e organizada, evitando conflitos de classe.
-*   **Vercel:** Para deploy contínuo (CI/CD) e hosting.
+### Frontend
+*   **React 18** & **TypeScript**
+*   **Vite** (Build tool)
+*   **React Router DOM** (Roteamento)
+*   **CSS Modules** (Estilização)
+*   **Vitest** & **Testing Library** (Testes)
 
-## ⚙️ Como Executar Localmente
+### Infraestrutura & DevOps
+*   **Docker** & **Docker Compose** (Containerização)
+*   **Nginx** (Servidor Web / Reverse Proxy / SSL)
+*   **GitHub Actions** (CI/CD Pipeline)
+*   **Autoheal** (Monitoramento e recuperação de containers)
 
-Para clonar e rodar esta aplicação, você precisará do [Git](https://git-scm.com) e [Node.js](https://nodejs.org/en/download/) (v20 ou superior) instalados no seu computador.
+## ⚙️ Como Executar
+
+### Opção 1: Desenvolvimento Local (Node.js)
 
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/leorecoa/meu-software-customizado.git
-
-# 2. Navegue até a pasta do projeto
 cd meu-software-customizado
 
-# 3. Instale as dependências
+# 2. Instale as dependências
 npm install
 
-# 4. Rode o servidor de desenvolvimento
+# 3. Rode o servidor de desenvolvimento
 npm run dev
 ```
 

@@ -1,0 +1,41 @@
+services:
+  frontend:
+    # Em produção, usamos a imagem baixada do registro em vez de construir localmente
+    image: ${IMAGE_FULL_NAME}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/nginx/certs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    container_name: meu-software-frontend
+    labels:
+      autoheal: "true"
+
+  backend:
+    image: node:22-alpine
+    container_name: meu-backend
+    command: node -e "require('http').createServer((req, res) => res.end('Ola do Backend!')).listen(3000)"
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    labels:
+      autoheal: "true"
+
+  autoheal:
+    image: willfarrell/autoheal
+    container_name: autoheal
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

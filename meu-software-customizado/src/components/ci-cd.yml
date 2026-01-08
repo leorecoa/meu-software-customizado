@@ -7,7 +7,6 @@ on:
     branches: ["main"]
 
 jobs:
-  # 1. Job de Testes (Integração Contínua)
   test:
     name: Rodar Testes (Vitest)
     runs-on: ubuntu-latest
@@ -22,23 +21,19 @@ jobs:
           cache: "npm"
 
       - name: Instalar dependências
-        # Usa npm install para garantir compatibilidade.
-        # Se tiver package-lock.json commitado, 'npm ci' é mais rápido.
         run: npm install
 
       - name: Executar Testes
         run: npm run test
 
-  # 2. Job de Build e Deploy (Entrega Contínua)
   build-and-push:
     name: Build Docker & Push to GHCR
-    needs: test # Só roda se os testes passarem
-    # Roda apenas na branch main (evita deploy de PRs não aprovados)
+    needs: test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Permissão necessária para subir no GHCR
+      packages: write
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -50,10 +45,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Garante que o nome do repositório esteja em minúsculas para o Docker
+      - name: Definir nome da imagem em minúsculas
+        run: |
+          echo "IMAGE_REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
       - name: Build e Push da Imagem
         uses: docker/build-push-action@v5
         with:
           context: .
+          # Aqui está o segredo: push: true envia a imagem para o registro
           push: true
-          # Gera a tag: ghcr.io/seu-usuario/seu-repo/frontend:latest
-          tags: ghcr.io/${{ github.repository }}/frontend:latest
+          tags: ghcr.io/${{ env.IMAGE_REPO }}/frontend:latest

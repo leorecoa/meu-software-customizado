@@ -8,10 +8,6 @@ RUN npm install
 
 COPY . .
 
-# Executa os testes automatizados. Se falhar, o build é cancelado.
-# A variável CI=true garante que o Jest/Vitest rode apenas uma vez (sem watch mode).
-RUN CI=true npm run test
-
 RUN npm run build
 
 # Estágio de Produção

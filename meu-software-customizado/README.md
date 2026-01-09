@@ -1,116 +1,118 @@
-# Laboratório de Hooks e Performance em React
+<div align="center">
 
-![CI/CD Pipeline](https://github.com/Leorecoa/meu-software-customizado/actions/workflows/ci-cd.yml/badge.svg)
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=6366F1&center=true&vCenter=true&width=600&lines=Leandro+Jesse;AI-Assisted+Frontend+Developer;Modern+Web+Applications" />
 
-> Um dashboard interativo para explorar e dominar os principais Hooks do React, otimizações de performance e boas práticas de desenvolvimento com TypeScript e Vite. O projeto conta com uma infraestrutura robusta containerizada.
+<br/><br/>
 
-[**Clique aqui para ver a demonstração ao vivo**](https://meu-software-customizado.vercel.app/)
+<img src="https://img.shields.io/badge/AI%20Assisted-8B5CF6?style=for-the-badge&logo=openai&logoColor=white" />
+<img src="https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript-3B82F6?style=for-the-badge&logo=react&logoColor=white" />
+<img src="https://img.shields.io/badge/Production%20Mindset-CI%2FCD%20%7C%20Docker-10B981?style=for-the-badge&logo=docker&logoColor=white" />
+
+</div>
 
 ---
 
-## 🚀 Sobre o Projeto
+## 🧠 The AI-Assisted Developer
 
-Este projeto foi criado como um "campo de treinamento" para aprofundar o conhecimento no ecossistema React moderno e práticas de DevOps.
+> **Human judgment first. AI as a multiplier — not a crutch.**
 
-A aplicação é um dashboard interativo onde cada "card" demonstra um conceito específico do React. Além disso, o projeto implementa um ambiente de produção simulado com Docker, Nginx e CI/CD.
+Sou um desenvolvedor focado em **frontend moderno**, usando IA como **acelerador de produtividade**, mantendo **decisões arquiteturais, qualidade e responsabilidade técnica humanas**.
 
-## 🛠️ Tecnologias Utilizadas
+---
 
-### Frontend
-*   **React 18** & **TypeScript**
-*   **Vite** (Build tool)
-*   **React Router DOM** (Roteamento)
-*   **CSS Modules** (Estilização)
-*   **Vitest** & **Testing Library** (Testes)
+## 🤖 Como uso IA no desenvolvimento
 
-### Infraestrutura & DevOps
-*   **Docker** & **Docker Compose** (Containerização)
-*   **Nginx** (Servidor Web / Reverse Proxy / SSL)
-*   **GitHub Actions** (CI/CD Pipeline)
-*   **Autoheal** (Monitoramento e recuperação de containers)
-
-## ⚙️ Como Executar
-
-### Opção 1: Desenvolvimento Local (Node.js)
-
-```bash
-# 1. Clone o repositório
-git clone https://github.com/leorecoa/meu-software-customizado.git
-cd meu-software-customizado
-
-# 2. Instale as dependências
-npm install
-
-# 3. Rode o servidor de desenvolvimento
-npm run dev
+```mermaid
+quadrantChart
+    title IA como multiplicador de desenvolvimento
+    x-axis Baixa Criatividade --> Alta Criatividade
+    y-axis Baixa Complexidade --> Alta Complexidade
+    "Boilerplate": [0.1, 0.2]
+    "Geração de Componentes": [0.4, 0.4]
+    "Decisões de Arquitetura": [0.8, 0.7]
+    "Soluções Criativas": [0.9, 0.9]
 ```
 
-## ✨ Funcionalidades e Conceitos Aplicados
+---
 
-*   **Hooks Fundamentais:** Demonstrações práticas de `useState`, `useEffect` e `useRef`.
-*   **Gerenciamento de Estado Avançado:** Evolução de `useState` para `useReducer` para lógicas mais complexas e centralizadas.
-*   **Otimização de Performance:**
-    *   `React.memo` para evitar re-renderização de componentes filhos.
-    *   `useCallback` para memorizar funções e manter a estabilidade de referência para props.
-    *   `useMemo` para memorizar cálculos pesados e evitar sua re-execução a cada render.
-*   **Roteamento:**
-    *   Configuração de rotas com `react-router-dom`.
-    *   Layout persistente com `Outlet` e `Navbar`.
-    *   Leitura de parâmetros da URL com `useParams`.
-    *   Navegação programática com `useNavigate`.
-    *   Estilização de links ativos com `NavLink`.
-*   **Estilização e UI/UX:**
-## 🎨 Design System
+## ⚡ Tech Stack & Workflow
 
-### Tokens
-- Colors via CSS Variables
-- Tipografia escalável
-- Espaçamentos padronizados
+| Área        | IA Apoia            | Minha Responsabilidade     | Resultado               |
+| ----------- | ------------------- | -------------------------- | ----------------------- |
+| UI/UX       | Sugestão de padrões | Curadoria visual           | Interfaces consistentes |
+| Código      | Boilerplate         | Arquitetura e legibilidade | Código limpo            |
+| Testes      | Casos iniciais      | Validação real             | Confiança               |
+| Performance | Análise             | Otimização manual          | Apps rápidos            |
+| Tooling     | Setup inicial       | Ajustes finos              | Fluxo eficiente         |
 
-### Tema
-- Dark/Light com `data-theme`
-- Persistência no localStorage
+---
 
-### Componentes
-- Button
-- Card
-- Layouts reutilizáveis
+## 🛠️ Stack Técnica
 
-### Padrões
-- CSS Modules
-- UI desacoplada de páginas
+### Core
 
-*   **DevOps:**
-    *   Configuração de projeto com Vite e TypeScript.
-    *   Deploy contínuo (CI/CD) configurado no Vercel.
+```ts
+const stack = {
+  language: "TypeScript",
+  framework: "React",
+  styling: "Tailwind CSS",
+  build: "Vite",
+  deploy: "Vercel",
+  container: "Docker"
+}
+```
 
-## 🧠 Estudo de Caso: Desafios e Aprendizados
+### Conceitos que aplico
 
-Esta seção detalha as decisões técnicas e os aprendizados obtidos durante o desenvolvimento.
+* Componentização real
+* Separação de responsabilidades
+* Design system básico
+* CI honesto (sem green fake)
+* Docker para padronização de ambiente
 
-### 1. O Problema da Re-renderização Desnecessária
+---
 
-Um dos maiores desafios em React é garantir que a aplicação permaneça performática à medida que cresce. Inicialmente, qualquer mudança de estado no componente principal (`RevisaoHooks`) causava a re-renderização de todos os seus filhos, incluindo a execução de cálculos pesados.
+## 🌟 Projetos em Destaque
 
-*   **Solução:**
-    *   O **`useMemo`** foi aplicado ao `resultadoCalculoPesado`. Com isso, o cálculo só é refeito quando sua dependência (`count`) muda, e não quando outros estados (como o `toggle`) são alterados.
-    *   O **`ComponenteFilho`** foi envolvido em **`React.memo`**, que faz uma comparação superficial de suas props.
-    *   No entanto, apenas o `React.memo` não foi suficiente, pois a função `handleChildClick` era recriada a cada renderização do pai. A solução foi envolver `handleChildClick` com **`useCallback`**, garantindo que sua referência permanecesse estável.
+### 🔹 Meu Software Customizado
 
-### 2. Organização do Estado: `useState` vs. `useReducer`
+**Aplicação frontend moderna**
 
-O estado do contador, embora simples, foi migrado de `useState` para `useReducer` como um exercício prático.
+* Tech: React + TypeScript + Vite
+* CI com GitHub Actions
+* Docker para ambiente previsível
+* Deploy automatizado
+* Foco em qualidade, não aparência
 
-*   **Aprendizado:** `useReducer` centraliza toda a lógica de transição de estado em uma única função (o *reducer*). Isso torna o componente mais limpo (os handlers apenas despacham ações) e o estado mais previsível e fácil de testar, uma abordagem que escala muito melhor para estados mais complexos.
+🔗 **Live:** https://meu-software-customizado.vercel.app
 
-### 3. Implementando um Tema Escuro Escalável
+---
 
-A implementação do Dark Mode foi feita de forma a ser robusta e de fácil manutenção.
+## 📦 Filosofia de Engenharia
 
-*   **Estratégia:**
-    1.  **Variáveis CSS:** Todas as cores do projeto foram definidas em variáveis no `:root` do `index.css`.
-    2.  **Sobrescrita com Classe:** Um arquivo `dark-mode.css` define os valores dessas mesmas variáveis quando o elemento `<html>` possui a classe `.dark`.
-    3.  **Context API:** O `ThemeContext` foi criado para gerenciar o estado atual do tema, persistir a escolha no `localStorage` e aplicar/remover a classe `.dark` do `<html>`.
-    4.  **Transições Suaves:** Uma transição CSS global foi adicionada para `background-color`, `color`, e `border-color`, garantindo que a troca de tema seja suave em toda a aplicação.
+* ❌ CI verde sem propósito → **não faço**
+* ✅ Ferramentas existem para **servir o projeto**
+* ✅ Simplicidade > hype
+* ✅ Infra só quando agrega valor
 
-Essa abordagem desacopla a lógica do tema dos componentes, que apenas consomem as variáveis CSS sem precisar saber qual tema está ativo.
+> *“A melhor automação é a que resolve um problema real.”*
+
+---
+
+## 🌐 Contato
+
+<div align="center">
+
+<a href="https://github.com/leorecoa">
+  <img src="https://custom-icon-badges.demolab.com/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+
+<a href="https://www.linkedin.com">
+  <img src="https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
+</a>
+
+</div>
+
+---
+
+<sub>🚀 Construindo software com responsabilidade técnica e IA como aliada.</sub>
